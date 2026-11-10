@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>beFood Product Take-Home Assignment · Mai Le</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf6;--fg:#141412;--muted:#62625c;--card:#ffffff;--line:#e2e1d9;--soft:#fff6c2;--brand:#ffd100;--brand-dk:#b89500;--code:#f1f0e9;--th:#111111;--th-fg:#ffd100;--link:#7a5f00;--side:#111111;
+  color-scheme: light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#121211;--fg:#f1f0ea;--muted:#a9a8a0;--card:#1b1b19;--line:#34342f;--soft:#2c2600;--brand:#ffd100;--brand-dk:#ffd100;--code:#262623;--th:#000;--th-fg:#ffd100;--link:#ffd100;--side:#0a0a09;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#121211;--fg:#f1f0ea;--muted:#a9a8a0;--card:#1b1b19;--line:#34342f;--soft:#2c2600;--brand:#ffd100;--brand-dk:#ffd100;--code:#262623;--th:#000;--th-fg:#ffd100;--link:#ffd100;--side:#0a0a09;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter','Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15.5px;line-height:1.62;-webkit-text-size-adjust:100%}
+button{font-family:inherit}
+/* ---------- layout ---------- */
+.side{position:fixed;left:0;top:0;bottom:0;width:300px;background:var(--side);color:#f1f0ea;display:flex;flex-direction:column;z-index:60;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.side-top{padding:22px 20px 14px}
+.logo{display:inline-block;background:#ffd100;color:#111;font-weight:800;font-size:19px;letter-spacing:-.5px;padding:2px 14px 5px;border-radius:11px}
+.logo.sm{background:#111;color:#ffd100;font-size:13px;padding:1px 10px 3px;border-radius:8px;margin-right:8px}
+.side-ttl{margin:12px 0 0;font-size:12.5px;line-height:1.35;color:#c9c8c0;font-weight:500}
+.side-ttl b{display:block;color:#fff;font-size:13.5px}
+.side-nav{flex:1;overflow-y:auto;padding:6px 10px 10px;scrollbar-width:thin;scrollbar-color:#333 transparent}
+.si{display:flex;align-items:flex-start;gap:10px;line-height:1.3;padding:9px 10px;margin-bottom:2px;border-radius:9px;color:#d7d6ce;text-decoration:none;font-size:13.5px;font-weight:600;border-left:3px solid transparent}
+.si .sn{margin-top:-1px;flex:0 0 22px;height:22px;border-radius:11px;background:#262624;color:#ffd100;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.si:hover{background:#1c1c1a;color:#fff}
+.si.on{background:#1f1d12;color:#fff;border-left-color:#ffd100}
+.si.on .sn{background:#ffd100;color:#111}
+.si.sub{margin-left:32px;font-size:12.5px;font-weight:500;padding:5px 10px;color:#a9a8a0}
+.si.sub::before{content:"▶";font-size:8px;color:#ffd100}
+.si.sub.on{color:#fff;background:transparent;border-left-color:transparent}
+.side-bot{padding:12px 14px calc(14px);border-top:1px solid #262624}
+.side-bot .row{display:flex;gap:6px}
+.sbtn{flex:1;background:#1f1f1d;border:1px solid #33332f;color:#f1f0ea;font-size:12px;font-weight:700;padding:7px 4px;border-radius:8px;cursor:pointer}
+.sbtn:hover{border-color:#ffd100;color:#ffd100}
+.side-by{margin-top:10px;font-size:11.5px;color:#a9a8a0}.side-by b{color:#fff}
+.progress{position:fixed;left:300px;right:0;top:0;height:3px;z-index:70;background:transparent}
+.progress i{display:block;height:100%;width:0;background:#ffd100}
+.main{margin-left:300px}
+.topbar{display:none}
+.scrim{display:none}
+/* hero */
+.hero{background:#ffd100;color:#111;padding:38px 40px 36px}
+.hero-in{max-width:860px;margin:0 auto}
+.eyebrow{margin:0 0 8px;font-size:12px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase}
+.hero h1{margin:0;font-size:clamp(28px,4.4vw,46px);line-height:1.06;font-weight:800;letter-spacing:-1px;color:#111}
+.hero .sub{margin:10px 0 0;font-size:clamp(16px,2vw,21px);font-weight:600;line-height:1.3;color:#111}
+.meta{display:flex;flex-wrap:wrap;gap:10px 36px;margin-top:24px}
+.meta span{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;opacity:.7}
+.meta b{font-size:15px;font-weight:800}
+.paths{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;align-items:center}
+.paths .pl{font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-right:4px}
+.paths a{background:#111;color:#ffd100;text-decoration:none;font-size:13px;font-weight:700;padding:6px 13px;border-radius:18px}
+.paths a:hover{background:#2a2a27}
+/* doc */
+.doc{max-width:900px;margin:0 auto;padding:30px 40px 70px}
+.sec{margin-bottom:40px}
+.doc h2{margin:0 0 16px;padding-top:14px;border-top:5px solid var(--brand);font-size:clamp(23px,3vw,30px);line-height:1.15;font-weight:800;letter-spacing:-.4px}
+.doc h2 .no{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;padding:0 9px;margin-right:12px;background:var(--brand);color:#111;border-radius:17px;font-size:16px;vertical-align:3px}
+.doc h3{margin:26px 0 8px;font-size:18px;font-weight:800;letter-spacing:-.2px}
+.doc h4{margin:18px 0 6px;font-size:15.5px;font-weight:800}
+.doc p{margin:0 0 12px}
+.doc p.lbl{margin:18px 0 6px;font-size:11.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--muted)}
+.doc hr{display:none}
+.doc ul,.doc ol{padding-left:22px;margin:4px 0 14px}
+.doc li{margin-bottom:5px}
+.doc li::marker{color:var(--brand-dk);font-weight:800}
+.doc strong{font-weight:700}
+.doc a{color:var(--link);text-underline-offset:2px;word-break:break-word}
+.doc code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.86em;background:var(--code);padding:1px 6px;border-radius:5px}
+.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.tw table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px;line-height:1.5}
+.tw th{background:var(--th);color:var(--th-fg);text-align:left;font-weight:700;font-size:12px;padding:9px 12px;white-space:nowrap}
+.tw td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tw tr:nth-child(even) td{background:color-mix(in srgb, var(--fg) 3%, transparent)}
+.tw.cond td:first-child{width:42%;font-weight:600}
+/* fold (details) */
+.fold{border:1.5px solid var(--line);border-radius:14px;background:var(--card);margin:12px 0;overflow:hidden}
+.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:13px 16px;font-weight:800;font-size:15.5px;user-select:none}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{content:"";flex:0 0 9px;height:9px;border-right:2.5px solid var(--fg);border-bottom:2.5px solid var(--fg);transform:rotate(-45deg);transition:transform .15s;margin:0 4px 0 2px}
+.fold[open]>summary::before{transform:rotate(45deg)}
+.fold>summary:hover{background:color-mix(in srgb, var(--brand) 14%, transparent)}
+.fold[open]>summary{border-bottom:1.5px solid var(--line)}
+.fold .st{flex:1}
+.fold .cnt{font-size:11px;font-weight:800;background:var(--brand);color:#111;border-radius:10px;padding:1px 9px}
+.fold .fb{padding:4px 16px 12px}
+.fold .fb>.tw:first-child{margin-top:12px}
+.fold.in{margin:8px 0;border-radius:11px;background:transparent}
+.fold.in>summary{font-size:14px;padding:10px 14px}
+/* tabs */
+.tabs{margin:12px 0}
+.tabbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tab{border:1.5px solid var(--fg);background:var(--card);color:var(--fg);padding:8px 16px;border-radius:22px;font-weight:700;font-size:13.5px;cursor:pointer;text-align:left;line-height:1.25}
+.tab small{display:block;font-weight:500;font-size:11.5px;color:var(--muted)}
+.tab.on{background:var(--brand);border-color:#111;color:#111}
+.tab.on small{color:#333}
+.tabpanel{display:none}
+.tabpanel.on{display:block}
+.tabpanel>h3:first-child{margin-top:4px}
+/* cards */
+.cards{list-style:none;padding:0!important;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cards li{background:var(--card);border:1.5px solid var(--line);border-radius:13px;padding:13px 15px;margin:0}
+.cards li a{font-weight:800;display:block;margin-bottom:3px}
+.wsbar{display:flex;gap:8px;align-items:center;margin:10px 0}
+.wsbar .pj-b{font-size:12px}
+.wsgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.wsc{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:8px}
+.wsc h5{margin:0;font-size:15px;line-height:1.25}
+.wsc .top{display:flex;gap:8px;justify-content:space-between;align-items:flex-start}
+.pri-pill{flex:0 0 auto;background:var(--brand);color:#111;font-size:10.5px;font-weight:800;border-radius:10px;padding:2px 9px;max-width:150px;line-height:1.3}
+.apps{display:flex;gap:6px;flex-wrap:wrap}
+.apps span{font-size:11px;font-weight:700;background:var(--code);padding:2px 9px;border-radius:10px}
+.wsc .obj{font-size:13.5px;color:var(--muted)}
+.wsc details{border-top:1px solid var(--line);padding-top:7px;font-size:13.5px}
+.wsc summary{cursor:pointer;font-weight:700;font-size:12.5px}
+.wsc details div{margin-top:6px}
+.wsview[data-mode="cards"] .altview{display:none}
+.wsview[data-mode="table"] .wsgrid{display:none}
+/* ticket */
+.tkcard{border:2px solid var(--fg);border-radius:14px;overflow:hidden;margin:14px 0}
+.tkhead{background:#111;color:#ffd100;padding:11px 16px;font-weight:800;font-size:15px}
+.tkhead small{display:block;color:#d7d6ce;font-weight:500;font-size:12px}
+.tkcard>.fold{border-radius:0;border-width:0 0 1.5px 0;margin:0}
+.tkcard>.fold:last-child{border-bottom:0}
+.tkw{border:1.5px dashed var(--line);border-radius:12px;padding:14px;margin:14px 0 6px;background:color-mix(in srgb, var(--brand) 6%, var(--card))}
+.tkw-head{font-size:13px;margin-bottom:10px}
+.tkw-grid{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+.tkw-stage{flex:0 0 auto;text-align:center}
+.tkw-stage .tabbar{justify-content:center;margin-bottom:10px;max-width:320px;gap:5px}
+.phone.sm{width:306px;height:618px;margin:0 auto}
+.tkw-acts{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.tkw-ac{flex:1 1 220px;list-style:none;padding:0!important;margin:0;font-size:13px}
+.tkw-ac li{display:flex;gap:9px;align-items:flex-start;padding:6px 9px;border-radius:9px;opacity:.5;margin:0 0 3px}
+.tkw-ac li.on{opacity:1;background:var(--soft);font-weight:600}
+.tkw-ac .n{flex:0 0 20px;height:20px;border-radius:10px;background:#111;color:#ffd100;font:800 11px/20px 'Inter',sans-serif;text-align:center}
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.foot b{color:var(--fg)}
+/* ---------- responsive ---------- */
+@media (max-width:1023px){
+  .side{transform:translateX(-102%);transition:transform .2s;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  body.menu-open .side{transform:none}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;opacity:0;pointer-events:none;transition:opacity .2s}
+  body.menu-open .scrim{opacity:1;pointer-events:auto}
+  .main{margin-left:0}
+  .progress{left:0}
+  .topbar{display:flex;position:sticky;top:0;z-index:50;background:#111;color:#fff;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px}
+  .topbar button{background:#ffd100;border:0;border-radius:10px;width:38px;height:36px;font-size:18px;font-weight:800;cursor:pointer}
+  .topbar b{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hero{padding:28px 20px 28px}
+  .doc{padding:22px 18px 60px}
+  html{scroll-padding-top:62px}
+}
+@media (max-width:640px){
+  .cards,.wsgrid{grid-template-columns:1fr}
+  .tw table{min-width:520px}
+}
+@media print{.side,.topbar,.progress{display:none}.main{margin-left:0}.hero{padding-top:24px}}
+.pscreen{text-align:left}
+.pscreen.ann .p-status-row{padding-left:14px}
+
+/* ---------- clickable wireframe ---------- */
+.pj{display:flex;gap:28px;align-items:flex-start;justify-content:center;flex-wrap:wrap;margin:18px 0 8px;padding:22px;border:1.5px solid var(--line);border-radius:16px;background:var(--card)}
+.pj-stage{flex:0 0 auto}
+.phone{width:344px;height:704px;background:#111;border-radius:42px;padding:10px;box-shadow:0 14px 40px rgba(0,0,0,.22);position:relative}
+.pscreen{width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;
+  --p-bg:#fff;--p-ink:#111;--p-mute:#6b6b66;--p-line:#e3e3dc;--p-soft:#fff6c2;--p-y:#ffd100;--p-red:#d6342b;--p-redbg:#fdeae8;--p-amb:#a86b00;--p-ambbg:#fff1d1;--p-green:#1e8e4e;--p-greenbg:#e7f6ec;--p-g1:#f3f3f0;
+  background:var(--p-bg);color:var(--p-ink);font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:13px}
+.p-status{display:flex;justify-content:space-between;padding:9px 20px 4px;font-size:11px;font-weight:700;flex:0 0 auto}
+.p-main{flex:1;min-height:0;position:relative;display:flex;flex-direction:column}
+.p-hdr{display:flex;align-items:center;gap:8px;padding:6px 16px 8px;flex:0 0 auto;border-bottom:1px solid var(--p-line)}
+.p-back{border:0;background:none;font-size:24px;line-height:1;padding:0 6px 3px 0;cursor:pointer;color:var(--p-ink)}
+.p-title{font-size:16px;font-weight:800;flex:1}
+.p-open{font-size:10px;font-weight:700;color:var(--p-green);background:var(--p-greenbg);padding:3px 8px;border-radius:10px}
+.p-beta{display:inline-block;background:var(--p-y);border:1px solid var(--p-ink);color:var(--p-ink);font-size:8.5px;font-weight:800;letter-spacing:.5px;padding:1px 6px;border-radius:8px;vertical-align:1px}
+.p-tabs{display:flex;border-bottom:1px solid var(--p-line);flex:0 0 auto}
+.p-tab{flex:1;border:0;background:none;padding:10px 0 9px;font:600 12px 'Inter',sans-serif;color:var(--p-mute);cursor:pointer;border-bottom:3px solid transparent}
+.p-tab.on{color:var(--p-ink);font-weight:800;border-bottom-color:var(--p-y)}
+.p-body{flex:1;min-height:0;overflow-y:auto;padding:12px 14px 14px}
+.p-card{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:var(--p-bg);border:1.5px solid var(--p-line);border-radius:14px;padding:11px 12px;margin-bottom:10px;cursor:pointer}
+.p-card.over{border-color:var(--p-red)}
+.p-card:hover{border-color:var(--p-ink)}
+.p-row{display:flex;align-items:center;gap:6px}
+.p-row b{font-size:13px;font-weight:800}
+.p-sp{flex:1}
+.p-chip{font-size:10.5px;font-weight:800;background:var(--p-soft);border:1px solid var(--p-y);padding:2px 8px;border-radius:10px;white-space:nowrap}
+.p-chip.over{background:var(--p-redbg);border-color:var(--p-red);color:var(--p-red)}
+.p-chip.ok{background:var(--p-greenbg);border-color:var(--p-green);color:var(--p-green)}
+.p-chip.late{background:var(--p-redbg);border-color:var(--p-red);color:var(--p-red)}
+.p-items{color:var(--p-mute);font-size:11.5px;margin:6px 0}
+.p-bar{height:6px;background:var(--p-g1);border-radius:3px;overflow:hidden;margin:7px 0}
+.p-bar i{display:block;height:100%;background:var(--p-ink);border-radius:3px;width:0}
+.p-bar.over i{background:var(--p-red)}
+.p-drvline{font-size:11.5px;font-weight:600}
+.p-drvline.warn{color:var(--p-amb)}
+.p-sub{font-size:10.5px;color:var(--p-mute);margin-top:3px}
+.p-status-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px}
+.p-status-row b{font-weight:800}
+.p-betabar{display:flex;gap:7px;align-items:center;background:var(--p-g1);border-radius:10px;padding:7px 9px;font-size:10.5px;color:var(--p-mute);margin-bottom:10px}
+.p-strip{background:var(--p-g1);border:1px solid var(--p-line);border-radius:12px;padding:9px 11px;margin-bottom:10px}
+.p-strip.warn{background:var(--p-ambbg);border-color:#e8c46a}
+.p-strip .t{font-size:13px;font-weight:800}
+.p-strip .s{font-size:10.5px;color:var(--p-mute);margin-top:2px}
+.p-strip .tag{float:right;font-size:9.5px;font-weight:800;background:var(--p-bg);border:1px solid var(--p-line);padding:1px 7px;border-radius:9px}
+.p-prep{background:var(--p-soft);border:1.8px solid var(--p-y);border-radius:14px;padding:12px;margin-bottom:10px}
+.p-prep.over{background:var(--p-redbg);border-color:var(--p-red)}
+.p-prep.done{background:var(--p-greenbg);border-color:var(--p-green)}
+.p-prep .k{font-size:9px;font-weight:800;letter-spacing:.6px;color:var(--p-mute);display:flex;justify-content:space-between}
+.p-prep .big{font-size:34px;font-weight:800;line-height:1.1;margin:6px 0 1px;font-variant-numeric:tabular-nums}
+.p-prep.over .big{color:var(--p-red)}
+.p-banner{border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:11.5px}
+.p-banner b{display:block;font-size:12px}
+.p-banner.amb{background:var(--p-ambbg);border:1px solid #e8c46a}
+.p-banner.red{background:var(--p-redbg);border:1px solid var(--p-red)}
+.p-banner.err{background:var(--p-redbg);border:1px solid var(--p-red);display:flex;gap:8px;align-items:center;justify-content:space-between}
+.p-h{font-size:9px;font-weight:800;letter-spacing:.6px;color:var(--p-mute);margin:12px 0 5px}
+.p-li{font-size:12.5px;padding:3px 0}
+.p-note{background:var(--p-g1);border-radius:8px;padding:6px 9px;font-size:11px;color:var(--p-mute);margin-top:6px}
+.p-mini{display:flex;justify-content:space-between;align-items:center;width:100%;border:1px solid var(--p-line);background:var(--p-bg);border-radius:10px;padding:8px 10px;margin-top:10px;font:600 11.5px 'Inter',sans-serif;color:var(--p-ink);cursor:pointer;text-align:left}
+.p-actions{flex:0 0 auto;padding:10px 14px 12px;border-top:1px solid var(--p-line);display:flex;gap:8px;background:var(--p-bg)}
+.p-btn{flex:1;font:800 13px 'Inter',sans-serif;padding:12px 8px;border-radius:12px;cursor:pointer;border:1.5px solid var(--p-ink);background:var(--p-bg);color:var(--p-ink)}
+.p-btn.pri{background:var(--p-y)}
+.p-btn:disabled{background:var(--p-g1);border-color:var(--p-line);color:#9a9a94;cursor:not-allowed}
+.p-btn.sm{flex:0 0 auto;padding:6px 12px;font-size:11.5px}
+.p-nav{flex:0 0 auto;display:flex;border-top:1px solid var(--p-line);background:var(--p-bg);padding:6px 0 10px}
+.p-nb{flex:1;border:0;background:none;font:600 10.5px 'Inter',sans-serif;color:var(--p-mute);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.p-nb i{width:20px;height:20px;border-radius:50%;background:var(--p-line)}
+.p-nb.on{color:var(--p-ink);font-weight:800}
+.p-nb.on i{background:var(--p-y);box-shadow:0 0 0 1.5px var(--p-ink)}
+.p-ov{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:20}
+.p-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--p-bg);border-radius:22px 22px 0 0;padding:14px 16px 16px;z-index:21}
+.p-sheet h5{margin:2px 0 2px;font-size:16px;font-weight:800}
+.p-sheet .d{font-size:11.5px;color:var(--p-mute);margin-bottom:12px}
+.p-opts{display:flex;gap:8px;margin-bottom:10px}
+.p-opt{flex:1;padding:11px 0;border-radius:11px;border:1.5px solid var(--p-line);background:var(--p-bg);font:700 13px 'Inter',sans-serif;cursor:pointer;color:var(--p-ink)}
+.p-opt.on{background:var(--p-y);border-color:var(--p-ink)}
+.p-toast{position:absolute;top:8px;left:10px;right:10px;background:var(--p-ink);color:#fff;font-size:11.5px;padding:9px 12px;border-radius:12px;z-index:30;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.p-toast b{color:var(--p-y)}
+.p-score{border:1.5px solid var(--p-line);border-radius:14px;padding:13px;margin-bottom:10px}
+.p-score .num{font-size:38px;font-weight:800;line-height:1}
+.p-stepper{display:flex;align-items:center;justify-content:center;gap:18px;border:1.5px solid var(--p-line);border-radius:14px;padding:16px}
+.p-stepper button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--p-ink);background:var(--p-bg);font:800 20px 'Inter',sans-serif;cursor:pointer;color:var(--p-ink)}
+.p-stepper button.y{background:var(--p-y)}
+.p-stepper .v{font-size:28px;font-weight:800;min-width:92px;text-align:center}
+.p-empty{padding:40px 16px;text-align:center;color:var(--p-mute);font-size:12px}
+.pscreen.ann [data-n]{position:relative}
+.pscreen.ann [data-n]::after{content:attr(data-n);position:absolute;top:-8px;left:-8px;width:19px;height:19px;border-radius:50%;background:#111;color:#ffd100;font:800 10px/19px 'Inter',sans-serif;text-align:center;z-index:9;box-shadow:0 0 0 2px #ffd100}
+.pj-side{flex:1 1 280px;max-width:380px;min-width:260px}
+.pj-side h4{margin:0 0 6px;font-size:14px}
+.pj-grp{margin-bottom:14px}
+.pj-lbl{font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.pj-btns{display:flex;flex-wrap:wrap;gap:6px}
+.pj-b{font:600 12px 'Inter',sans-serif;border:1.5px solid var(--fg);background:var(--card);color:var(--fg);padding:6px 11px;border-radius:18px;cursor:pointer}
+.pj-b.on{background:var(--brand);color:#111;border-color:#111;font-weight:800}
+.pj-b:hover{border-color:var(--brand-dk)}
+.pj-clock{font-variant-numeric:tabular-nums;font-weight:800}
+.pj-legend{margin:8px 0 0;padding:0;list-style:none;font-size:12px}
+.pj-legend li{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start}
+.pj-legend .n{flex:0 0 19px;height:19px;border-radius:50%;background:#111;color:#ffd100;font:800 10px/19px 'Inter',sans-serif;text-align:center}
+@media (max-width:420px){.phone{width:312px;height:660px}.pj{padding:12px}}
+
+</style>
+</head>
+<body>
+<div class="progress"><i></i></div>
+<div class="scrim"></div>
+<aside class="side" aria-label="Contents">
+  <div class="side-top">
+    <span class="logo">beFood</span>
+    <p class="side-ttl"><b>Product Owner take-home</b>Merchant preparation time &amp; Driver wait time</p>
+  </div>
+  <nav class="side-nav"><a class="si" href="#1-executive-summary"><span class="sn">1</span><span>Executive summary</span></a><a class="si" href="#2-product-context-and-competitor-references"><span class="sn">2</span><span>Product context and competitor references</span></a><a class="si" href="#3-product-decisions-assumptions-and-scope"><span class="sn">3</span><span>Product decisions, assumptions, and scope</span></a><a class="si" href="#4-workstreams-and-features-by-jtbd"><span class="sn">4</span><span>Workstreams and features by JTBD</span></a><a class="si" href="#5-phase-development"><span class="sn">5</span><span>Phase development</span></a><a class="si" href="#6-edge-cases-and-logic"><span class="sn">6</span><span>Edge cases and logic</span></a><a class="si" href="#7-merchant-app-screen-specification"><span class="sn">7</span><span>Merchant App screen specification</span></a><a class="si" href="#8-example-implementation-ticket-one-sprint-sized-slice"><span class="sn">8</span><span>Example implementation ticket - one sprint-sized slice</span></a><a class="si" href="#9-trade-off-analysis"><span class="sn">9</span><span>Trade-off analysis</span></a><a class="si" href="#10-roll-out-plan-and-phase-evaluation-metrics"><span class="sn">10</span><span>Roll-out plan and phase evaluation metrics</span></a><a class="si" href="#11-sources"><span class="sn">11</span><span>Sources</span></a></nav>
+  <div class="side-bot">
+    <div class="row"><button class="sbtn" data-fold="open">Expand all</button><button class="sbtn" data-fold="close">Collapse all</button></div>
+    <div class="side-by">Prepared by <b>Mai Le</b></div>
+  </div>
+</aside>
+<div class="main">
+  <div class="topbar"><button data-menu aria-label="Open contents">☰</button><b data-cur>Contents</b></div>
+  <header class="hero">
+    <div class="hero-in">
+      <p class="eyebrow">Product Owner · Take-home assignment</p>
+      <h1>beFood Product Take-Home Assignment</h1>
+      <h2 class="sub">Merchant Preparation Time &amp; Driver Wait-Time Reduction</h2>
+      <div class="meta"><div><span>Prepared by</span><b>Mai Le</b></div><div><span>Submitted to</span><b>beFood Product team</b></div><div><span>Date</span><b>November 2026</b></div></div>
+      <div class="paths"><span class="pl">Quick read</span><a href="#1-executive-summary">Summary</a><a href="#clickable-wireframe">Clickable wireframe</a><a href="#story-wireframe">Story wireframe</a><a href="#9-trade-off-analysis">Trade-offs</a></div>
+    </div>
+  </header>
+  <main class="doc">
+<section class="sec" data-no="1" id="1-executive-summary"><h2 id="1-executive-summary"><span class="no">1</span>Executive summary</h2>
+<details class="fold" open=""><summary><span class="st">Problem</span></summary><div class="fb">
+<p>The current flow assigns a Driver before the order reaches the Merchant. If the Merchant cannot see when the Driver is expected to arrive, staff may delay preparation to avoid food sitting ready for too long. This response to pickup uncertainty can increase Driver wait and extend the Customer’s delivery time.</p>
+</div></details><details class="fold" open=""><summary><span class="st">Recommendation</span></summary><div class="fb">
+<p>The product hypothesis is that making the preparation target visible and capturing readiness at the source will reduce avoidable Driver wait without shifting the cost to Customers through later deliveries, cancellations, or poor food quality. I recommend an event-driven MVP that combines a Merchant-level preparation target, order-level readiness actions, server-timestamped events, and the assigned Driver’s ETA as an informational signal. The Merchant App shows the preparation target/countdown alongside “Driver arrives in X min”; it does not calculate when the Merchant should start cooking. The Driver App shows the Merchant’s expected ready-by time and current readiness status for participating Merchants.</p>
+<p>Keep the current Driver-assignment sequence in the MVP. Dispatch Engine changes sit outside the beFood product boundary and require a separate Platform decision. Use the pilot to validate the hypothesis before expanding scope or applying performance consequences.</p>
+</div></details><details class="fold" open=""><summary><span class="st">Product principles and metric definitions</span></summary><div class="fb">
+<ul>
+<li><strong>Merchant preparation time:</strong> <code>ready_at - merchant_order_available_at</code>.</li>
+<li><strong>Driver wait time:</strong> <code>picked_up_at - driver_arrived_at</code>.</li>
+<li><strong>Potential Merchant-attributable wait:</strong> compare the actual ready time with the later of Driver arrival and the applicable preparation target. Preserve the initial target and every approved revision; a late extension must not erase a breach against the original target. Treat this as a measurement candidate, not a penalty rule, until attribution is validated.</li>
+<li>Use server timestamps as the source of truth. The preparation countdown is a client display derived from the server start time. Treat Driver ETA as a changing informational estimate, display its last-updated time, and measure its accuracy against actual arrival. Do not use it to calculate Merchant start instructions.</li>
+<li>Keep the Customer’s estimated delivery time distinct from the Merchant’s preparation countdown.</li>
+</ul>
+
+</div></details></section><section class="sec" data-no="2" id="2-product-context-and-competitor-references"><h2 id="2-product-context-and-competitor-references"><span class="no">2</span>Product context and competitor references</h2>
+<p>The <a href="https://food.be.com.vn/">public beFood site</a> provides Customer-facing discovery and ordering. <a href="https://be.com.vn/en/be_academy/huong-dan-thao-tac-nhan-va-xu-ly-don-hang-tren-ung-dung-bemerchant/">Public beMerchant guidance</a> documents order handling and a Merchant action to mark an order prepared. This proposal extends that workflow; Phase 1 must verify the current app behavior, event availability, and integration points before implementation.</p>
+<p>Public competitor materials provide useful patterns for preparation-time management:</p>
+<ul class="cards">
+<li><a href="https://help.uber.com/merchants-and-restaurants/article/what-happens-when-an-order-comes-in-?nodeId=40e41b78-72ba-4b48-9a9a-818217902abf">Uber Eats</a> describes a Merchant default prep time, an estimate informed by the ordered items and order conditions, and order-level extensions.</li>
+<li><a href="https://help.doordash.com/en-us/merchants/article/item-level-prep-times">DoorDash</a> documents prep-time settings at item level.</li>
+<li><a href="https://merchant.shopeefood.vn/edu/article/cac-trang-thai-cua-don-hang">ShopeeFood</a> encourages Merchants to mark an order ready as soon as it is ready, even when the countdown has not ended.</li>
+<li><a href="https://merchant.grab.com/vn-vn/guides/default/danh-dau-don-hang-san-sang">GrabMerchant</a> supports a Merchant “Ready” action.</li>
+</ul>
+<p>These references support the proposed interaction patterns. They do not prove that competitors use the same dispatch sequence, incentives, or technical architecture as beFood; those details should not be inferred from public help content.</p>
+
+</section><section class="sec" data-no="3" id="3-product-decisions-assumptions-and-scope"><h2 id="3-product-decisions-assumptions-and-scope"><span class="no">3</span>Product decisions, assumptions, and scope</h2>
+<p><strong>Terminology:</strong> Merchant is the restaurant partner; Driver is the delivery partner; Customer is the person placing the order. “Driver App” names the app surface, while “Driver” names its user. The experiment unit is the Merchant.</p>
+<ol>
+<li>Driver assignment happens before the order reaches the Merchant, as stated in the assignment; the dispatch sequence remains unchanged in the MVP.</li>
+<li><strong>ETA availability assumption:</strong> the existing order/Platform API exposes the assigned Driver’s estimated arrival time at the Merchant, its last-updated timestamp, and reassignment state to the Merchant App. The MVP consumes this information; it does not change dispatch or Driver assignment logic. Confirm the API contract during implementation discovery.</li>
+<li>The Merchant App displays a fresh assigned Driver ETA alongside the Merchant preparation target/countdown. ETA is a reassurance and measurement signal, not a recommendation algorithm; it does not determine when the Merchant should begin cooking or reset the countdown. If ETA is missing or stale, show “ETA unavailable” and retain the preparation target/countdown.</li>
+<li>The preparation countdown starts at the server timestamp when the order becomes available in the Merchant App. The device renders the countdown from this timestamp; it does not own the clock.</li>
+<li>Phase 1 gives each Merchant one default preparation-time target. Per-item configuration is outside MVP scope.</li>
+<li>The Merchant can request additional preparation time on an active order.</li>
+<li>Driver features are released to all Drivers. Beta information appears only on orders from participating Merchants.</li>
+<li>Each eligible Merchant is assigned to a stable A/B group by Merchant ID. Every order inherits that assignment when it enters the experiment.</li>
+<li>The control group continues to use the current Merchant flow.</li>
+<li>Phase 1 includes countdown reminders, a lightweight on-time scorecard, a soft performance warning, and non-financial recognition. Phase 2 introduces the graduated operational consequences and appeal flow.</li>
+<li>Dispatch Engine changes remain owned by the Dispatch/Platform team and are outside the beFood MVP scope.</li>
+</ol>
+
+</section><section class="sec" data-no="4" id="4-workstreams-and-features-by-jtbd"><h2 id="4-workstreams-and-features-by-jtbd"><span class="no">4</span>Workstreams and features by JTBD</h2>
+<p>Workstreams are organized around the job and order journey. App names identify where the feature appears; they are not workstream names.</p>
+
+
+<div class="wsview" data-mode="cards"><div class="wsbar"><button class="pj-b on" data-mode="cards">Cards</button><button class="pj-b" data-mode="table">Table</button></div><div class="wsgrid"><div class="wsc"><div class="top"><h5>WS1. Set the Merchant’s preparation capability</h5><span class="pri-pill">Must-have</span></div><div class="apps"><span>Merchant App</span></div><div class="obj">Set a clear preparation target for each Merchant</div><div class="obj"><b>Priority detail:</b> Merchant default target. Later: data-based recommendation and per-item settings</div><details><summary>Features and tasks</summary><div>Configure one default preparation-time target per Merchant; apply a platform default when none is set; show the active target; record server-side availability and readiness timestamps</div></details><details><summary>Dependencies</summary><div>Merchant settings API; order event timestamps</div></details></div><div class="wsc"><div class="top"><h5>WS2. Receive an order and know what to do next</h5><span class="pri-pill">Must-have</span></div><div class="apps"><span>Merchant App</span></div><div class="obj">Help the Merchant understand the target and start order preparation</div><details><summary>Features and tasks</summary><div>Show order contents, Customer notes, preparation target/countdown, and assigned Driver ETA with last-updated time as informational context; do not suggest a preparation start time. Remind the Merchant when the target is approaching or missed; show Beta onboarding to Group A and retain the current flow for Group B</div></details><details><summary>Dependencies</summary><div>Order API; assigned Driver ETA and <code>last_updated_at</code>; order-available server timestamp; feature flag</div></details></div><div class="wsc"><div class="top"><h5>WS3. Update progress when more time is needed</h5><span class="pri-pill">Must-have</span></div><div class="apps"><span>Merchant App</span></div><div class="obj">Let the Merchant communicate a realistic change in readiness</div><details><summary>Features and tasks</summary><div>Add “Need more time”; select an allowed extension; update the target/countdown; save the extension and event history; show a retry state when the update fails</div></details><details><summary>Dependencies</summary><div>Order update API; agreed extension options; event log</div></details></div><div class="wsc"><div class="top"><h5>WS4. Mark the order ready and hand it over</h5><span class="pri-pill">Must-have</span></div><div class="apps"><span>Merchant App</span><span>Driver App</span></div><div class="obj">Tell the system and Driver when food is ready</div><details><summary>Features and tasks</summary><div>Merchant marks order ready; save ready timestamp; Driver sees the expected ready-by time and current readiness for orders from Group A Merchants; update the ready-by time after an accepted extension; show beta explanation because not every Merchant participates</div></details><details><summary>Dependencies</summary><div>Order status API; Driver order details</div></details></div><div class="wsc"><div class="top"><h5>WS5. Track and understand waiting time</h5><span class="pri-pill">Must-have for measurement; Driver App changes are limited to relevant order status</span></div><div class="apps"><span>Driver App; events captured from order flow</span></div><div class="obj">Measure avoidable Driver wait and distinguish its likely cause</div><details><summary>Features and tasks</summary><div>Capture Driver arrival, pickup, ETA/update time, and expected ready-by timestamps; distinguish Merchant preparation time from Driver wait; flag early-arrival and post-ready delays for separate analysis</div></details><details><summary>Dependencies</summary><div>Driver status/GPS events; order timestamps</div></details></div><div class="wsc"><div class="top"><h5>WS6. Review results, feedback, and improve performance</h5><span class="pri-pill">Phase 1</span></div><div class="apps"><span>Phase 1: Merchant App and existing reporting tools; Phase 2 onward: Merchant App and existing reporting tools</span></div><div class="obj">Measure pilot outcomes, then make Merchant performance policy explainable and reviewable</div><div class="obj"><b>Priority detail:</b> lightweight incentive MVP. Phase 2: graduated policy release</div><details><summary>Features and tasks</summary><div>Phase 1: provide countdown reminders, a Merchant-facing on-time scorecard and soft warning, and non-financial recognition; use captured events and existing reporting tools to compare A/B outcomes. Phase 2: build the graduated operational consequences, detailed policy explanation, notifications, and review/appeal flow.</div></details><details><summary>Dependencies</summary><div>Phase 1: reliable order events and experiment assignment. Phase 2: validated thresholds and review workflow</div></details></div><div class="wsc"><div class="top"><h5>WS7. Know when the order is expected to arrive</h5><span class="pri-pill">Phase 2</span></div><div class="apps"><span>Customer App</span></div><div class="obj">Keep the Customer informed when preparation timing changes</div><details><summary>Features and tasks</summary><div>Phase 1 preserves the current ETA experience and records baseline accuracy. Phase 2 shows and updates the estimated delivery time or range when preparation time changes. Phase 3 improves the estimate using observed preparation, pickup, and delivery data. Never substitute the Merchant countdown for Customer ETA.</div></details><details><summary>Dependencies</summary><div>ETA service/API; preparation updates; dispatch and delivery estimates</div></details></div></div><div class="altview"><div class="tw"><table>
+<thead>
+<tr>
+<th>Workstream / JTBD</th>
+<th>Objective</th>
+<th>App touchpoints</th>
+<th>Features and tasks</th>
+<th>Dependencies</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WS1. Set the Merchant’s preparation capability</strong></td>
+<td>Set a clear preparation target for each Merchant</td>
+<td>Merchant App</td>
+<td>Configure one default preparation-time target per Merchant; apply a platform default when none is set; show the active target; record server-side availability and readiness timestamps</td>
+<td>Merchant settings API; order event timestamps</td>
+<td>Must-have: Merchant default target. Later: data-based recommendation and per-item settings</td>
+</tr>
+<tr>
+<td><strong>WS2. Receive an order and know what to do next</strong></td>
+<td>Help the Merchant understand the target and start order preparation</td>
+<td>Merchant App</td>
+<td>Show order contents, Customer notes, preparation target/countdown, and assigned Driver ETA with last-updated time as informational context; do not suggest a preparation start time. Remind the Merchant when the target is approaching or missed; show Beta onboarding to Group A and retain the current flow for Group B</td>
+<td>Order API; assigned Driver ETA and <code>last_updated_at</code>; order-available server timestamp; feature flag</td>
+<td>Must-have</td>
+</tr>
+<tr>
+<td><strong>WS3. Update progress when more time is needed</strong></td>
+<td>Let the Merchant communicate a realistic change in readiness</td>
+<td>Merchant App</td>
+<td>Add “Need more time”; select an allowed extension; update the target/countdown; save the extension and event history; show a retry state when the update fails</td>
+<td>Order update API; agreed extension options; event log</td>
+<td>Must-have</td>
+</tr>
+<tr>
+<td><strong>WS4. Mark the order ready and hand it over</strong></td>
+<td>Tell the system and Driver when food is ready</td>
+<td>Merchant App, Driver App</td>
+<td>Merchant marks order ready; save ready timestamp; Driver sees the expected ready-by time and current readiness for orders from Group A Merchants; update the ready-by time after an accepted extension; show beta explanation because not every Merchant participates</td>
+<td>Order status API; Driver order details</td>
+<td>Must-have</td>
+</tr>
+<tr>
+<td><strong>WS5. Track and understand waiting time</strong></td>
+<td>Measure avoidable Driver wait and distinguish its likely cause</td>
+<td>Driver App; events captured from order flow</td>
+<td>Capture Driver arrival, pickup, ETA/update time, and expected ready-by timestamps; distinguish Merchant preparation time from Driver wait; flag early-arrival and post-ready delays for separate analysis</td>
+<td>Driver status/GPS events; order timestamps</td>
+<td>Must-have for measurement; Driver App changes are limited to relevant order status</td>
+</tr>
+<tr>
+<td><strong>WS6. Review results, feedback, and improve performance</strong></td>
+<td>Measure pilot outcomes, then make Merchant performance policy explainable and reviewable</td>
+<td>Phase 1: Merchant App and existing reporting tools; Phase 2 onward: Merchant App and existing reporting tools</td>
+<td>Phase 1: provide countdown reminders, a Merchant-facing on-time scorecard and soft warning, and non-financial recognition; use captured events and existing reporting tools to compare A/B outcomes. Phase 2: build the graduated operational consequences, detailed policy explanation, notifications, and review/appeal flow.</td>
+<td>Phase 1: reliable order events and experiment assignment. Phase 2: validated thresholds and review workflow</td>
+<td>Phase 1: lightweight incentive MVP. Phase 2: graduated policy release</td>
+</tr>
+<tr>
+<td><strong>WS7. Know when the order is expected to arrive</strong></td>
+<td>Keep the Customer informed when preparation timing changes</td>
+<td>Customer App</td>
+<td>Phase 1 preserves the current ETA experience and records baseline accuracy. Phase 2 shows and updates the estimated delivery time or range when preparation time changes. Phase 3 improves the estimate using observed preparation, pickup, and delivery data. Never substitute the Merchant countdown for Customer ETA.</td>
+<td>ETA service/API; preparation updates; dispatch and delivery estimates</td>
+<td>Phase 2</td>
+</tr>
+</tbody>
+</table></div></div></div></section><section class="sec" data-no="5" id="5-phase-development"><h2 id="5-phase-development"><span class="no">5</span>Phase development</h2>
+<div class="tabs"><div class="tabbar" role="tablist"><button class="tab on" role="tab" type="button">Phase 1<small>MVP build and A/B pilot</small></button><button class="tab" role="tab" type="button">Phase 2<small>Customer ETA and incentive validation</small></button><button class="tab" role="tab" type="button">Phase 3<small>Scale the validated experience</small></button></div><div class="tabpanel on"><h3 id="phase-1-mvp-build-and-ab-pilot">Phase 1 - MVP build and A/B pilot</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>App changed</th>
+<th>Feature changes in this phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WS1. Set preparation capability</strong></td>
+<td>Merchant App</td>
+<td>Add a Merchant-level default preparation-time setting. Use it as the target for new orders from Merchants in Group A. Apply a platform-configured default when a Merchant has not set a target. Do not add per-item settings.</td>
+</tr>
+<tr>
+<td><strong>WS2. Receive order and know next step</strong></td>
+<td>Merchant App</td>
+<td>Show the preparation target, countdown, order contents, Customer notes, assigned Driver ETA, and ETA last-updated time on active Group A orders. Display the ETA as “Driver arrives in X min”; do not derive a suggested start time or alter the countdown based on ETA. Send one reminder when 5 minutes remain and one when the target is missed; do not send duplicate reminders for the same order state. Start the countdown from the server timestamp. Show Beta onboarding to Group A and retain the current UI for Group B.</td>
+</tr>
+<tr>
+<td><strong>WS3. Update progress</strong></td>
+<td>Merchant App</td>
+<td>Add “Need more time” with predefined extension values. Update the countdown and save each extension event. Show a clear failure state and retry option if the update does not reach the server. Disable updates after cancellation or completion.</td>
+</tr>
+<tr>
+<td><strong>WS4. Mark ready and hand over</strong></td>
+<td>Merchant App, Driver App</td>
+<td>Add “Order ready” for Merchants in Group A and save the server timestamp. Release the Driver-side feature to all Drivers. Show readiness information only for orders from Merchants in Group A. Add a Beta note explaining that preparation information is available only for participating Merchants during the test. Keep the current Driver flow for orders from Group B Merchants.</td>
+</tr>
+<tr>
+<td><strong>WS5. Track waiting time</strong></td>
+<td>Driver App; events from order flow</td>
+<td>Capture server timestamps for order availability, target ready-by, readiness, Driver arrival, and pickup. Capture Driver ETA and update time at order receipt and each refresh. Calculate preparation time and Driver wait separately; measure ETA freshness, arrival accuracy, and gap between ready-by and arrival.</td>
+</tr>
+<tr>
+<td><strong>WS6. See preparation performance and get lightweight feedback</strong></td>
+<td>Merchant App; existing reporting tools</td>
+<td>Show Group A Merchants an order-level “On time” or “Late by X min” status and a rolling 7-day scorecard with the on-time rate and eligible-order count. Define on-time as ready no later than the committed target plus a 5-minute grace period. Show a soft warning and practical guidance when the rolling 7-day on-time rate is 85% or lower after at least 20 eligible orders. Award a non-financial “Reliable Preparation” badge when on-time preparation reaches 95% with at least 20 eligible orders and quality guardrails are met. Use existing reporting tools to compare outcomes and calibrate Phase 2 thresholds. Do not apply intake restrictions or financial penalties.</td>
+</tr>
+<tr>
+<td><strong>WS7. Customer ETA</strong></td>
+<td>Customer App</td>
+<td>Keep the current Customer-facing ETA/status unchanged during the initial Merchant A/B pilot. Capture baseline ETA accuracy, delivery lateness, cancellation, and Customer contacts for orders from both groups.</td>
+</tr>
+<tr>
+<td><strong>A/B release and Beta communication</strong></td>
+<td>Merchant App, Driver App</td>
+<td>Randomly assign eligible Merchants to stable A/B groups using Merchant ID as the experiment unit. Stratify by pre-agreed operating characteristics (for example, region and order volume) where sample size supports it. Group A receives the new Merchant feature set, including ETA context, reminders, scorecard, soft warning, and non-financial badge; Group B retains the existing flow. Driver capability is released to all Drivers, but expected ready-by/readiness information is conditional on the order’s Merchant group. The Beta notice explains that some Merchants are participating and others are not. Assignment, exposure, and order-level group are recorded automatically; Operations does not activate Merchants manually.</td>
+</tr>
+</tbody>
+</table></div>
+</div><div class="tabpanel"><h3 id="phase-2-customer-eta-and-incentive-validation">Phase 2 - Customer ETA and incentive validation</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>App changed</th>
+<th>Feature changes in this phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WS1. Set preparation capability</strong></td>
+<td>Merchant App</td>
+<td>Show a recommended default preparation time based on the Merchant’s observed preparation history and time of day. Let the Merchant review and confirm or adjust it. Keep per-item configuration out of this phase.</td>
+</tr>
+<tr>
+<td><strong>WS2. Receive order and know next step</strong></td>
+<td>Merchant App</td>
+<td>Refine countdown presentation and reminder timing using Phase 1 results. Show an actionable reminder as the target approaches or passes.</td>
+</tr>
+<tr>
+<td><strong>WS3. Update progress</strong></td>
+<td>Merchant App</td>
+<td>Add standardized extension reasons, such as high order volume or an item taking longer than expected. Show extension history in the order detail and apply consistent extension limits.</td>
+</tr>
+<tr>
+<td><strong>WS4. Mark ready and hand over</strong></td>
+<td>Merchant App, Driver App</td>
+<td>Improve status synchronization so both sides see whether the Merchant has marked the order ready and whether the Driver has arrived or picked it up. Preserve the event history for support review.</td>
+</tr>
+<tr>
+<td><strong>WS5. Track waiting time</strong></td>
+<td>Driver App</td>
+<td>Show expected ready-by time, readiness status, and waiting duration on orders from Group A Merchants. Make early arrival and post-ready pickup delay distinguishable in the order timeline.</td>
+</tr>
+<tr>
+<td><strong>WS6. Launch graduated Merchant performance policy</strong></td>
+<td>Merchant App; existing reporting tools</td>
+<td>Extend the Phase 1 scorecard with the rolling 7-day rate, eligible-order count, late minutes, exclusions, and policy tier; explain the next consequence; notify the Merchant when a tier changes; provide order-level evidence and in-app review/appeal. Apply the validated graduated intake restrictions and campaign eligibility rules below. Continue the non-financial recognition for reliable preparation.</td>
+</tr>
+<tr>
+<td><strong>WS7. Customer ETA</strong></td>
+<td>Customer App</td>
+<td>For eligible orders, show an estimated delivery time or range and update it when the Merchant extends preparation time. Display a Beta explanation while coverage is partial. Notify the Customer when the change materially affects arrival; keep the Merchant preparation countdown private. Retain a randomized ETA holdout among eligible orders to measure the feature’s incremental effect.</td>
+</tr>
+<tr>
+<td><strong>A/B release and Beta communication</strong></td>
+<td>Merchant App, Driver App</td>
+<td>Expand Merchants in Group A in measured rollout waves. Keep the Driver feature released to all Drivers; display new fields only for participating Merchants and retain the Beta explanation while Merchant coverage is partial.</td>
+</tr>
+</tbody>
+</table></div>
+<details class="fold in"><summary><span class="st">WS6 Phase 2 policy - graduated consequences</span></summary><div class="fb">
+<p>The policy design takes inspiration from food-delivery industry practices that use progressive warnings, temporary order-intake pauses, and campaign eligibility to address repeated Merchant preparation delays. Phase 1 releases the lightweight scorecard, reminders, soft warning, and non-financial badge. Phase 2 builds on that foundation with the following graduated operational consequences, using Phase 1 data to validate the metric and calibrate thresholds. Parcel-delivery late-shipment metrics are not equivalent to restaurant food-preparation time.</p>
+<p class="lbl"><strong>Measurement rule</strong></p>
+<ul>
+<li>Evaluate a rolling 7-day window. An eligible order must have a valid server-side order-available timestamp, the target accepted for that order, and a valid Merchant “Order ready” event. Exclude orders cancelled before preparation, system/API outages, and records with missing or conflicting timestamps.</li>
+<li>Count an order as late when the Merchant marks it ready more than <strong>5 minutes after the committed target</strong>. Allow at most one extension per order in the MVP, selected from predefined increments up to 15 minutes. An extension submitted before the existing target expires becomes the revised commitment; one submitted after expiry does not remove lateness already incurred. Retain the original and revised targets in the order history. Validate the 15-minute cap against Phase 1 data before activation.</li>
+<li>Calculate <code>late-preparation rate = qualifying late orders / eligible orders</code>. Do not apply automated consequences until the Merchant has at least <strong>20 eligible orders</strong> in the window. The Merchant target must also fall within the configured valid range; flag repeated target increases for review so a Merchant cannot avoid lateness by continually inflating the target. Check the proposed starting thresholds against Phase 1 historical/pilot distributions and fix them before Phase 2 activation.</li>
+</ul>
+<p class="lbl"><strong>Graduated consequences - proposed Phase 2 starting policy</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Rolling 7-day late-preparation rate</th>
+<th>Merchant-facing action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Below 15%</td>
+<td>No penalty; show the rate and order history for awareness.</td>
+</tr>
+<tr>
+<td>15% to below 25%</td>
+<td>In-app warning with the late orders, minutes late, preparation target, and practical guidance.</td>
+</tr>
+<tr>
+<td>25% to below 35%</td>
+<td>Temporarily pause new order intake for 15 minutes; show the reason and allow the Merchant to resume once ready.</td>
+</tr>
+<tr>
+<td>35% or higher</td>
+<td>Temporarily pause new order intake for 1 hour; show the affected order evidence and the next review time.</td>
+</tr>
+<tr>
+<td>35% or higher in two consecutive 7-day windows</td>
+<td>24-hour intake pause and temporary ineligibility for campaign/voucher participation, followed by re-evaluation.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Apply only the highest tier reached in a window; do not stack multiple pauses for the same evaluation. Do not apply a consequence when the event record is unreliable or a valid review is pending. False “Order ready” reports require corroborating Driver/support evidence and an in-app review before they can affect the rate or policy tier.</p>
+<p class="lbl"><strong>Reward for reliable preparation</strong></p>
+<p>In Phase 1, a Merchant with at least 20 eligible orders in the rolling 7-day window, at least <strong>95% on-time preparation</strong>, no substantiated false-ready event, and cancellation/quality guardrails within the agreed baseline receives a <strong>Reliable Preparation</strong> badge in the Merchant App. In Phase 2, the same status can qualify the Merchant for relevant beFood campaign or voucher programs. Eligibility is not a promise of campaign placement. Defer cash rewards or fee discounts until the pilot demonstrates incremental benefit and the incentive cost is approved.</p>
+<p class="lbl"><strong>Fairness and appeal safeguards</strong></p>
+<ul>
+<li>Show the Merchant the rolling rate, denominator, each included/excluded order, target and extension history, readiness timestamp, and policy tier in the Merchant App.</li>
+<li>Let the Merchant request a review from the order detail within 48 hours of a warning or consequence. Pause escalation on the disputed order until review is resolved; provide the decision and reason in-app.</li>
+<li>Exclude late preparation caused by a beFood outage, invalid timestamps, or other verified non-Merchant causes. A Driver arriving early is not itself evidence of Merchant fault; assess the Merchant against the committed target.</li>
+<li>Keep scorecard data, policy actions, and reviewer decisions in an auditable event history. Phase 1 uses the scorecard for feedback and non-financial recognition; Phase 2 releases operational restrictions after the thresholds and appeal process are configured and reviewed.</li>
+</ul>
+</div></details></div><div class="tabpanel"><h3 id="phase-3-scale-the-validated-experience">Phase 3 - Scale the validated experience</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>App changed</th>
+<th>Feature changes in this phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WS1. Set preparation capability</strong></td>
+<td>Merchant App</td>
+<td>Generate a Merchant-level preparation-time recommendation from historical completion data and time of day. Add per-item configuration for items with enough data and a demonstrated need.</td>
+</tr>
+<tr>
+<td><strong>WS2. Receive order and know next step</strong></td>
+<td>Merchant App</td>
+<td>Show a preparation target calibrated to the Merchant and order context. Explain material changes from the Merchant’s default target.</td>
+</tr>
+<tr>
+<td><strong>WS3. Update progress</strong></td>
+<td>Merchant App</td>
+<td>Suggest an extension based on the Merchant’s observed preparation patterns and active workload. The Merchant confirms the change before it is applied.</td>
+</tr>
+<tr>
+<td><strong>WS4. Mark ready and hand over</strong></td>
+<td>Merchant App, Driver App</td>
+<td>Standardize the readiness and pickup experience for all participating Merchants. Remove Beta messaging after rollout is complete.</td>
+</tr>
+<tr>
+<td><strong>WS5. Track waiting time</strong></td>
+<td>Driver App</td>
+<td>Retain readiness and waiting information in the standard Driver order flow. Use consistent event definitions across Merchants.</td>
+</tr>
+<tr>
+<td><strong>WS6. Review results and feedback</strong></td>
+<td>Merchant App; measurement in rollout</td>
+<td>Scale only the incentive and graduated consequence policy validated in Phase 2. Show each Merchant the measured rate, qualifying orders, event evidence, applied tier, and appeal status.</td>
+</tr>
+<tr>
+<td><strong>WS7. Customer ETA</strong></td>
+<td>Customer App</td>
+<td>Extend the validated ETA experience to all eligible orders. Remove Beta messaging after rollout is complete. Improve delivery-time estimates using observed Merchant preparation, Driver pickup, and delivery durations.</td>
+</tr>
+<tr>
+<td><strong>Dispatch coordination</strong></td>
+<td>Platform API; outside beFood-owned app scope</td>
+<td>Provide preparation target and ready-state events to the Dispatch/Platform owners for a separate dispatch-coordination change. The beFood team does not modify Dispatch Engine logic.</td>
+</tr>
+</tbody>
+</table></div>
+
+</div></div></section><section class="sec" data-no="6" id="6-edge-cases-and-logic"><h2 id="6-edge-cases-and-logic"><span class="no">6</span>Edge cases and logic</h2>
+<p>These are boundary, failure, and conflicting-state conditions that need explicit handling in the proposed workflow or its measurement. Routine operating variation-such as a busy Merchant or a complex order-is handled by the standard countdown and extension flow, not treated as an edge case.</p>
+<details class="fold" open=""><summary><span class="st">Preparation target and countdown</span></summary><div class="fb">
+<div class="tw cond"><table><thead><tr><th>Condition</th><th>Expected handling</th></tr></thead><tbody><tr><td>The Merchant has no configured default, or the saved value is outside the allowed range</td><td>Apply the system default and prevent an invalid target from starting the countdown.</td></tr><tr><td>The Merchant changes its default while an order is active</td><td>The active order keeps the target captured when it was sent, and only new orders use the new default.</td></tr><tr><td>The order is cancelled, rejected, or otherwise becomes ineligible before or during the countdown</td><td>Stop the timer and exclude it from preparation-performance measurement.</td></tr><tr><td>The app is backgrounded, closed, or offline</td><td>Reconstruct the countdown from the server start timestamp. It must not pause or restart on the device.</td></tr><tr><td>Order-created, Merchant-received, and target-update events arrive late, more than once, or out of order</td><td>Process each event idempotently and preserve the authoritative server timestamps.</td></tr></tbody></table></div>
+</div></details><details class="fold"><summary><span class="st">Extension and readiness actions</span></summary><div class="fb">
+<div class="tw cond"><table><thead><tr><th>Condition</th><th>Expected handling</th></tr></thead><tbody><tr><td>Two Merchant users/devices request an extension at nearly the same time</td><td>Accept one update and show the latest saved target on all sessions.</td></tr><tr><td>An extension request is retried after a timeout</td><td>The retry must not add the extension twice.</td></tr><tr><td>The order is already ready, cancelled, or completed when an extension request reaches the server</td><td>Reject the update and show the current order state.</td></tr><tr><td>The Merchant marks the order ready while an extension request is in flight</td><td>The final state remains ready and the extension does not move the order back to preparing.</td></tr><tr><td>The Merchant taps “Order ready” more than once or a correction is requested after the action</td><td>Preserve one readiness event and use the defined correction flow without erasing the audit history.</td></tr></tbody></table></div>
+</div></details><details class="fold"><summary><span class="st">Driver ETA as an informational signal</span></summary><div class="fb">
+<div class="tw cond"><table><thead><tr><th>Condition</th><th>Expected handling</th></tr></thead><tbody><tr><td>The assigned Driver ETA is missing or stale</td><td>Show its last-updated time or “ETA unavailable.” Keep the Merchant target/countdown visible and do not block order handling.</td></tr><tr><td>Driver assignment or ETA changes</td><td>Refresh the displayed ETA without changing the Merchant preparation target/countdown or suggesting when to start cooking.</td></tr><tr><td>The Driver arrives before or after the expected ready-by time</td><td>Record the actual arrival and readiness events for analysis, without treating ETA variance alone as Merchant fault.</td></tr><tr><td>The Merchant accepts an extension</td><td>Update the expected ready-by time in the Driver App while retaining the original target and extension history.</td></tr></tbody></table></div>
+</div></details><details class="fold"><summary><span class="st">Driver arrival and pickup timestamps</span></summary><div class="fb">
+<div class="tw cond"><table><thead><tr><th>Condition</th><th>Expected handling</th></tr></thead><tbody><tr><td>The Driver arrives before the target readiness time</td><td>Record the early arrival separately and do not attribute the full wait to the Merchant.</td></tr><tr><td>The Driver arrives after the Merchant marks the order ready</td><td>Separate Merchant preparation time from post-ready pickup delay.</td></tr><tr><td>The Driver is reassigned after arrival</td><td>Retain the original arrival and pickup history and identify which Driver performed each event.</td></tr><tr><td>GPS is unavailable/inaccurate, or the Driver fails to tap “Arrived”</td><td>Mark the arrival timestamp as missing/unverified and exclude the order from automatic performance action.</td></tr><tr><td>“Picked up” is received before “Ready,” or Driver events are duplicated/out of sequence</td><td>Reconcile against the authoritative order state and do not regress status.</td></tr><tr><td>No Driver is assigned or the assigned Driver cancels</td><td>Keep this separate from Merchant preparation performance.</td></tr></tbody></table></div>
+</div></details><details class="fold"><summary><span class="st">Customer ETA and experiment assignment</span></summary><div class="fb">
+<div class="tw cond"><table><thead><tr><th>Condition</th><th>Expected handling</th></tr></thead><tbody><tr><td>Merchant extends preparation after the displayed Customer ETA has already passed</td><td>Recalculate from the latest preparation and delivery estimates, then notify the Customer of the revised expected arrival.</td></tr><tr><td>ETA service does not return a refreshed estimate</td><td>Retain the last valid ETA, show an update-in-progress state, and do not display the Merchant preparation countdown as a substitute ETA.</td></tr><tr><td>Multiple small Merchant extensions arrive close together</td><td>Consolidate Customer notifications and show the latest estimate to avoid repeated conflicting updates.</td></tr><tr><td>A/B assignment changes while an order is active</td><td>The order retains the Merchant’s assigned group captured when it entered the experiment.</td></tr><tr><td>Driver or Customer opens an order during partial rollout</td><td>Show Beta information only when that order belongs to a Group A Merchant. Absence of the new information on orders from Group B Merchants is expected.</td></tr><tr><td>Required timestamps are missing or unreliable</td><td>Keep the order out of automatic reward/penalty decisions and retain it for data-quality review.</td></tr></tbody></table></div>
+
+</div></details></section><section class="sec" data-no="7" id="7-merchant-app-screen-specification"><h2 id="7-merchant-app-screen-specification"><span class="no">7</span>Merchant App screen specification</h2>
+<details class="fold" open=""><summary><span class="st">Low-fidelity screen structure: active order detail - Group A Merchant</span></summary><div class="fb">
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Screen area</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Order header</strong></td>
+<td>Order ID, received time, status: “Preparing”</td>
+</tr>
+<tr>
+<td><strong>Beta marker</strong></td>
+<td>“Beta” with short explanation: “This preparation-time feature is being tested with selected Merchants.”</td>
+</tr>
+<tr>
+<td><strong>Driver ETA context</strong></td>
+<td>“Driver arrives in 12 min” with last-updated time. Informational only; no suggested start time. If ETA is missing/stale, show “Driver ETA unavailable” and retain the preparation countdown.</td>
+</tr>
+<tr>
+<td><strong>Preparation target card</strong></td>
+<td>“Target preparation time: 15 min”; countdown “08:32 remaining”; helper text “Update the order if you need more time.”</td>
+</tr>
+<tr>
+<td><strong>Order contents</strong></td>
+<td>Items, quantities, options, and Customer notes</td>
+</tr>
+<tr>
+<td><strong>Reminder</strong></td>
+<td>One reminder when 5 minutes remain; one reminder when the target is missed, with an action to request more time or mark the order ready.</td>
+</tr>
+<tr>
+<td><strong>Preparation performance</strong></td>
+<td>Rolling 7-day on-time rate and eligible-order count; “Reliable Preparation” badge at the Phase 1 threshold. Show a soft warning with guidance below the warning threshold.</td>
+</tr>
+<tr>
+<td><strong>Primary action</strong></td>
+<td><strong>Order ready</strong></td>
+</tr>
+<tr>
+<td><strong>Secondary action</strong></td>
+<td><strong>Need more time</strong> → select a predefined extension duration; confirm</td>
+</tr>
+<tr>
+<td><strong>Driver status</strong></td>
+<td>“Driver on the way”, “Driver arrived”, or “Driver waiting” when status data is available</td>
+</tr>
+<tr>
+<td><strong>Error state</strong></td>
+<td>“Update not sent. Check your connection and try again.”</td>
+</tr>
+</tbody>
+</table></div>
+</div></details><details class="fold" open=""><summary><span class="st">Merchant preparation-time setting</span></summary><div class="fb">
+<ul>
+<li>Setting name: <strong>Default preparation time</strong></li>
+<li>Value: duration in minutes</li>
+<li>Helper text: “Used as the preparation target for new orders. You can request more time on an individual order.”</li>
+<li>Apply for each Merchant in Phase 1.</li>
+</ul>
+
+</div></details><h3 id="clickable-wireframe">Clickable wireframe: Merchant App</h3>
+<p>Interactive version of the screen specification above, for the Merchant App only. Tap through the order list, the active order, “Need more time”, “Order ready”, the performance view and the preparation setting. Use the controls beside the phone to move time forward and to see the 5-minute reminder, the overdue state, the ETA-unavailable state, the error state and the control group’s current flow.</p>
+<div class="pj">
+<div class="pj-stage"><div class="phone"><div class="pscreen" id="pscreen"></div></div></div>
+<aside class="pj-side" id="pside"></aside>
+</div>
+</section><section class="sec" data-no="8" id="8-example-implementation-ticket-one-sprint-sized-slice"><h2 id="8-example-implementation-ticket-one-sprint-sized-slice"><span class="no">8</span>Example implementation ticket - one sprint-sized slice</h2>
+<p>This ticket covers one independent Merchant App outcome: giving a Group A Merchant clear preparation timing and Driver ETA context. It assumes the existing order API exposes the preparation target, server-side order-available timestamp, assigned Driver ETA, ETA update time, and Merchant experiment group. If an input is missing, create a separate API/data-contract enabler instead of expanding this ticket.</p>
+<div class="tkcard"><div class="tkhead">Ticket: Show preparation countdown and Driver ETA on an active order<small>Sprint-ready user story · Merchant App</small></div><details class="fold" open=""><summary><span class="st">User story</span></summary><div class="fb">
+<p>As a Merchant staff member, I want to see the preparation target/countdown and when the assigned Driver is expected to arrive, so I understand pickup timing without changing the preparation commitment.</p>
+</div></details><details class="fold" open=""><summary><span class="st">Design</span></summary><div class="fb"><div class="tkw" id="story-wireframe">
+<div class="tkw-head"><b>Wireframe for this story.</b> Switch the state to see how each acceptance criterion (AC) appears. Numbers on the screen match the AC numbers.</div>
+<div class="tkw-grid" id="tkw">
+<div class="tkw-stage">
+<div class="tabbar" id="tkstates"></div>
+<div class="phone sm"><div class="pscreen ann" id="tkscreen"></div></div>
+<div class="tkw-acts"><button class="pj-b" data-tk="reopen">Leave and reopen app</button><button class="pj-b" data-tk="driver">Driver changes</button></div>
+</div>
+<ol class="tkw-ac" id="tkac"></ol>
+</div>
+</div>
+</div></details><details class="fold" open=""><summary><span class="st">In scope</span></summary><div class="fb">
+<ul>
+<li>Show the Merchant’s preparation target and countdown on an active Group A order.</li>
+<li>Show the assigned Driver ETA and its last-updated time.</li>
+<li>Show Driver ETA as informational context only. Do not calculate a suggested preparation start time.</li>
+<li>Show an ETA-unavailable state when the ETA is missing or beyond the configured freshness threshold. Keep the preparation target/countdown visible.</li>
+<li>Show the Beta explanation to Group A Merchants. Keep the existing order screen for Group B.</li>
+</ul>
+</div></details><details class="fold"><summary><span class="st">Dependencies / assumptions</span></summary><div class="fb">
+<ul>
+<li>The order API returns the fields listed above and an authoritative Merchant group assignment.</li>
+<li>The Merchant default preparation duration is already configured or a platform default is available.</li>
+<li>ETA freshness threshold is provided by the Platform/API contract; this ticket does not define or change Driver ETA generation.</li>
+</ul>
+</div></details><details class="fold" open=""><summary><span class="st">Acceptance criteria</span></summary><div class="fb">
+<ol>
+<li>For an active Group A order, the screen shows the preparation target and remaining time derived from the server-side <code>merchant_order_available_at</code> timestamp; the device clock does not reset or pause the countdown.</li>
+<li>Reopening the order or returning from background shows the same remaining time implied by the server timestamp.</li>
+<li>When a fresh Driver ETA is available, the screen shows its estimated arrival time and last-updated time.</li>
+<li>The screen does not derive a prep start time from Driver ETA or change the countdown based on ETA.</li>
+<li>If ETA is missing or stale, the UI shows “Driver ETA unavailable,” preserves the preparation countdown, and does not block order handling.</li>
+<li>If the assigned Driver or ETA changes, refresh the displayed ETA without resetting the preparation countdown.</li>
+<li>Group A sees the Beta explanation and new information; Group B retains the existing order screen.</li>
+<li>When the countdown reaches zero, show the target as reached/overdue; do not mark the order ready automatically.</li>
+</ol>
+</div></details><details class="fold"><summary><span class="st">Out of scope - split into follow-up tickets</span></summary><div class="fb">
+<ul>
+<li>Merchant marks an order ready and records the server-side ready event.</li>
+<li>Merchant requests an extension and sees the revised target/countdown.</li>
+<li>Retry, idempotency, and conflict handling for ready/extension updates.</li>
+<li>Merchant scorecard, soft warning, and non-financial recognition (separate Phase 1 WS6 ticket); countdown reminders are a separate WS2 ticket.</li>
+<li>Graduated operational consequences and appeal workflow (Phase 2 WS6).</li>
+<li>Changes to Driver assignment, Dispatch Engine, or Customer ETA.</li>
+</ul>
+</div></details><details class="fold"><summary><span class="st">Sizing note</span></summary><div class="fb">
+<p>This is a bounded UI/data-consumption ticket and should fit within one sprint if the stated API fields and experiment assignment already exist. API work is a separate enabler if those preconditions are not met.</p>
+
+</div></details></div></section><section class="sec" data-no="9" id="9-trade-off-analysis"><h2 id="9-trade-off-analysis"><span class="no">9</span>Trade-off analysis</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Benefit</th>
+<th>Risk</th>
+<th>MVP decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default preparation time for each Merchant rather than per-item setup</td>
+<td>Lower setup burden and faster release</td>
+<td>Less precise for menus with very different preparation times</td>
+<td>Use default preparation time for each Merchant in Phase 1; evaluate item-level setup after observing data</td>
+</tr>
+<tr>
+<td>Driver ETA context plus Merchant countdown</td>
+<td>Reduces uncertainty about pickup while preserving the Merchant’s preparation target</td>
+<td>Driver ETA can change or become stale</td>
+<td>Show ETA freshness as information only; keep the preparation countdown authoritative and use a clear unavailable state</td>
+</tr>
+<tr>
+<td>Driver assignment remains unchanged</td>
+<td>Respects ownership boundary and keeps MVP focused</td>
+<td>Countdown alone cannot ensure a Driver arrives when food is ready</td>
+<td>Keep this as a separate Platform request informed by pilot evidence</td>
+</tr>
+<tr>
+<td>A/B by Merchant</td>
+<td>Stable experience for Merchant and clear comparison</td>
+<td>Merchant differences can affect results</td>
+<td>Assign for each Merchant and compare cohorts on relevant operating conditions</td>
+</tr>
+<tr>
+<td>Driver feature released to all, data conditional by Merchant</td>
+<td>Drivers learn one consistent UI; information appears where the new flow applies</td>
+<td>Drivers see the new information on some orders but not others</td>
+<td>Show a persistent, concise Beta explanation while Merchant coverage is partial</td>
+</tr>
+<tr>
+<td>Graduated operational consequences in Phase 2</td>
+<td>Responds proportionately to repeated late preparation</td>
+<td>Thresholds can unfairly affect Merchants if event quality or sample size is weak</td>
+<td>Phase 1 already changes behavior with reminders, a scorecard, soft warning, and non-financial recognition; Phase 2 adds validated intake restrictions and an appeal flow</td>
+</tr>
+</tbody>
+</table></div>
+
+</section><section class="sec" data-no="10" id="10-roll-out-plan-and-phase-evaluation-metrics"><h2 id="10-roll-out-plan-and-phase-evaluation-metrics"><span class="no">10</span>Roll-out plan and phase evaluation metrics</h2>
+<div class="tabs"><div class="tabbar" role="tablist"><button class="tab on" role="tab" type="button">Phase 1<small>A/B pilot</small></button><button class="tab" role="tab" type="button">Phase 2<small>Customer ETA and incentive validation</small></button><button class="tab" role="tab" type="button">Phase 3<small>Full release and ongoing optimization</small></button></div><div class="tabpanel on"><h3 id="phase-1-ab-pilot">Phase 1 - A/B pilot</h3>
+<p><strong>Primary outcome:</strong> Driver wait time at the Merchant location (median and p90), compared between Group A and Group B.</p>
+<p><strong>ETA signal quality:</strong> measure ETA availability, freshness, and error at order receipt and before Driver arrival. These guard the reliability of the information shown to Merchants and support ETA-to-ready-by analysis; ETA does not drive a prep-start recommendation.</p>
+<p><strong>Guardrails:</strong> cancellations, order completion, food-quality complaints, false-ready reports, Merchant opt-out/disputes, Customer ETA error, and event-data quality. Agree on the minimum detectable effect and guardrail thresholds using baseline data before launch, then keep those decision criteria fixed during evaluation.</p>
+<p class="lbl"><strong>Release setup</strong></p>
+<ul>
+<li>Assign eligible Merchants automatically to stable groups through the feature-flag/experiment configuration.</li>
+<li><strong>Group A:</strong> Merchant target/countdown, Driver ETA context, reminders, scorecard, soft warning, and non-financial badge, with Beta UI.</li>
+<li><strong>Group B:</strong> existing Merchant flow.</li>
+<li>Release the Driver UI to all Drivers. Show expected ready-by and readiness information only for orders from Group A Merchants.</li>
+<li>Explain in Driver UI: “Some Merchants are testing preparation-time updates, so this information may not appear on every order.”</li>
+<li>Keep the existing Customer App ETA experience during Phase 1. Record current ETA, actual delivery time, cancellations, and Customer contacts as the baseline for both Merchant groups.</li>
+<li>Do not manually enable the feature for each Merchant.</li>
+</ul>
+<p class="lbl"><strong>Evaluation metrics</strong></p>
+<ul>
+<li>Median and p90 Merchant preparation time (diagnostic metric).</li>
+<li>Median and p90 Driver wait time at the Merchant location (primary outcome).</li>
+<li>Gap between expected ready-by and actual Driver arrival; share of orders ready before or close to Driver arrival.</li>
+<li>Share of orders exceeding the target preparation time.</li>
+<li>Extension usage and repeat-extension rate.</li>
+<li>Cancellation rate by reason.</li>
+<li>Driver ETA availability, staleness, and arrival-time error.</li>
+<li>Merchant views of Driver ETA, reminder engagement, and gap between expected ready-by and actual Driver arrival.</li>
+<li>Missing/late/duplicate event rate.</li>
+<li>Merchant and Driver complaints about early arrival, cold food, or inaccurate status.</li>
+<li>Customer ETA error, late-delivery rate, cancellation rate, and contacts about delivery timing as baseline measures.</li>
+</ul>
+<p class="lbl"><strong>Scale decision</strong></p>
+<p>Compare outcomes on an intention-to-treat basis (by assigned group, whether or not a Merchant used the new actions). Expand Group A only when the primary outcome improves and pre-agreed guardrails remain within bounds. Exclude orders with missing or unreliable timestamps from performance attribution; retain them in data-quality reporting.</p>
+</div><div class="tabpanel"><h3 id="phase-2-customer-eta-and-incentive-validation_1">Phase 2 - Customer ETA and incentive validation</h3>
+<p class="lbl"><strong>Release setup</strong></p>
+<ul>
+<li>Expand the Merchant feature in measured waves while retaining a randomized comparison cohort for the agreed measurement period. For the Customer ETA change, randomize eligible Group A orders into ETA treatment and holdout so the ETA effect can be measured separately from the Merchant workflow.</li>
+<li>Keep Driver release global; display information according to the order’s Merchant participation.</li>
+<li>Release the Customer App ETA update for orders from Group A Merchants. Group B orders keep the existing ETA experience. Show a Beta note on eligible Customer orders explaining that delivery-time updates are being tested with selected Merchants.</li>
+<li>Keep the Phase 1 reminders, scorecard, soft warnings, and non-financial badge active. Build and release the graduated operational consequence tiers in Phase 2 after Phase 1 validates timestamp data and threshold calibration. Add Merchant-facing policy explanations, order-level evidence, notifications, and in-app review/appeal. Defer cash rewards until incremental value is proven.</li>
+</ul>
+<p class="lbl"><strong>Evaluation metrics</strong></p>
+<ul>
+<li>Change in Driver wait time against the Phase 1 baseline and comparison cohort.</li>
+<li>Change in on-time readiness and extension patterns.</li>
+<li>Cancellation and order-completion rates.</li>
+<li>Merchant adoption, satisfaction, and dispute rate.</li>
+<li>Driver complaints and perceived wait-time predictability.</li>
+<li>Customer ETA accuracy: difference between the latest displayed ETA and actual delivery time.</li>
+<li>Rate of ETA changes after Merchant extensions; Customer cancellations and support contacts after an ETA change.</li>
+<li>Share of orders delivered within the displayed ETA range.</li>
+<li>Share of Merchants in each policy tier; warnings, pauses, review requests, upheld/reversed decisions, and repeat late-preparation rates.</li>
+<li>Reward-policy cost and impact on sustained behavior.</li>
+</ul>
+<p class="lbl"><strong>Scale decision</strong></p>
+<p>Expand the Customer ETA update when displayed estimates are more accurate than the baseline, Customers receive the update before the old ETA passes, and ETA changes do not materially increase cancellations or support contacts. Continue or revise the Merchant policy only when improvement persists across Merchant types and time periods, consequences are not concentrated in data-quality failures, and appeal/quality guardrails remain within agreed thresholds.</p>
+</div><div class="tabpanel"><h3 id="phase-3-full-release-and-ongoing-optimization">Phase 3 - Full release and ongoing optimization</h3>
+<p class="lbl"><strong>Release setup</strong></p>
+<ul>
+<li>Release the validated Merchant flow to all eligible Merchants.</li>
+<li>Remove Beta messaging after rollout is complete.</li>
+<li>Release the standard Driver experience with consistent readiness information.</li>
+<li>Release the validated Customer App ETA experience to all eligible orders and remove Beta messaging after coverage is complete.</li>
+<li>Introduce data-based preparation recommendations and any approved item-level settings.</li>
+<li>Submit dispatch coordination as a separate Platform/Dispatch initiative.</li>
+</ul>
+<p class="lbl"><strong>Evaluation metrics</strong></p>
+<ul>
+<li>Preparation-time prediction accuracy by Merchant and time of day.</li>
+<li>Driver wait median/p90 and share of orders with avoidable wait.</li>
+<li>Order cancellation, completion, and quality-complaint trends.</li>
+<li>Merchant and Driver retention/engagement with the new workflow.</li>
+<li>Incentive-policy effectiveness and dispute outcomes.</li>
+<li>Customer ETA accuracy, on-time delivery against the displayed estimate, and Customer contacts about lateness.</li>
+</ul>
+
+</div></div></section><section class="sec" data-no="11" id="11-sources"><h2 id="11-sources"><span class="no">11</span>Sources</h2>
+<ul>
+<li>Assignment PDF: <em>Take-home Assignment PO Food (MC).pdf</em>.</li>
+<li>beFood consumer site: <a href="https://food.be.com.vn/">https://food.be.com.vn/</a></li>
+<li>beMerchant order handling guide: <a href="https://be.com.vn/en/be_academy/huong-dan-thao-tac-nhan-va-xu-ly-don-hang-tren-ung-dung-bemerchant/">https://be.com.vn/en/be_academy/huong-dan-thao-tac-nhan-va-xu-ly-don-hang-tren-ung-dung-bemerchant/</a></li>
+<li>Uber Eats merchant order/prep-time guide: <a href="https://help.uber.com/merchants-and-restaurants/article/what-happens-when-an-order-comes-in-?nodeId=40e41b78-72ba-4b48-9a9a-818217902abf">https://help.uber.com/merchants-and-restaurants/article/what-happens-when-an-order-comes-in-?nodeId=40e41b78-72ba-4b48-9a9a-818217902abf</a></li>
+<li>Uber Eats delay order guide: <a href="https://help.uber.com/merchants-and-restaurants/article/how-do-i-delay-an-order?nodeId=64ca9a31-7dfd-45c1-91a2-f871a2d0d2b3">https://help.uber.com/merchants-and-restaurants/article/how-do-i-delay-an-order?nodeId=64ca9a31-7dfd-45c1-91a2-f871a2d0d2b3</a></li>
+<li>DoorDash item-level prep times: <a href="https://help.doordash.com/en-us/merchants/article/item-level-prep-times">https://help.doordash.com/en-us/merchants/article/item-level-prep-times</a></li>
+<li>ShopeeFood preparation-time guide: <a href="https://merchant.shopeefood.vn/edu/article/bi-kip-giam-thoi-gian-chuan-bi-don-hang-tren-shopeefood">https://merchant.shopeefood.vn/edu/article/bi-kip-giam-thoi-gian-chuan-bi-don-hang-tren-shopeefood</a></li>
+<li>ShopeeFood order status guide: <a href="https://merchant.shopeefood.vn/edu/article/cac-trang-thai-cua-don-hang">https://merchant.shopeefood.vn/edu/article/cac-trang-thai-cua-don-hang</a></li>
+<li>Industry reference: merchant preparation-time performance, outlet pause, and appeal guidance (ShopeeFood): <a href="https://help.shopee.co.id/portal/4/article/203403-%5BMerchant-ShopeeFood%5D-Mengapa-Outlet-Saya-Dihentikan-Sementara">https://help.shopee.co.id/portal/4/article/203403-%5BMerchant-ShopeeFood%5D-Mengapa-Outlet-Saya-Dihentikan-Sementara</a></li>
+<li>Industry reference: progressive responses to ignored or late-prepared orders (ShopeeFood): <a href="https://help.shopee.co.id/portal/4/article/139533-Apa-yang-terjadi-jika-outlet-Merchant-ShopeeFood-saya-menunda-melihat-pesanan">https://help.shopee.co.id/portal/4/article/139533-Apa-yang-terjadi-jika-outlet-Merchant-ShopeeFood-saya-menunda-melihat-pesanan</a></li>
+<li>GrabMerchant ready-order guide: <a href="https://merchant.grab.com/vn-vn/guides/default/danh-dau-don-hang-san-sang">https://merchant.grab.com/vn-vn/guides/default/danh-dau-don-hang-san-sang</a></li>
+</ul></section>
+    <footer class="foot"><span class="logo sm">beFood</span> Product Take-Home Assignment · Prepared by <b>Mai Le</b></footer>
+  </main>
+</div>
+<script>
+(function(){
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const body=document.body;
+function setMenu(o){body.classList.toggle('menu-open',o);}
+$$('[data-menu]').forEach(b=>b.addEventListener('click',()=>setMenu(!body.classList.contains('menu-open'))));
+const scrim=document.querySelector('.scrim'); if(scrim) scrim.addEventListener('click',()=>setMenu(false));
+$$('.si').forEach(a=>a.addEventListener('click',()=>{setMenu(false);}));
+/* expand / collapse all */
+function all(open){$$('details.fold').forEach(d=>{d.open=open;});}
+$$('[data-fold]').forEach(b=>b.addEventListener('click',()=>all(b.dataset.fold==='open')));
+window.addEventListener('beforeprint',()=>{all(true);$$('.tabpanel').forEach(p=>p.classList.add('on'));});
+/* tabs */
+function showTab(tabs,i){
+  $$('.tab',tabs).forEach((t,k)=>{t.classList.toggle('on',k===i);t.setAttribute('aria-selected',k===i);});
+  $$(':scope > .tabpanel',tabs).forEach((p,k)=>p.classList.toggle('on',k===i));
+}
+$$('.tabs').forEach(t=>{
+  $$('.tab',t).forEach((b,i)=>b.addEventListener('click',()=>showTab(t,i)));
+});
+/* workstream view toggle */
+$$('.wsview').forEach(v=>{
+  $$('[data-mode]',v).forEach(b=>b.addEventListener('click',()=>{
+    v.dataset.mode=b.dataset.mode;
+    $$('[data-mode]',v).forEach(x=>x.classList.toggle('on',x===b));
+  }));
+});
+/* open ancestors of a hash target */
+function reveal(el){
+  let n=el;
+  while(n&&n!==document.body){
+    if(n.tagName==='DETAILS') n.open=true;
+    if(n.classList&&n.classList.contains('tabpanel')){const t=n.parentElement;const i=$$(':scope > .tabpanel',t).indexOf(n);showTab(t,i);}
+    n=n.parentElement;
+  }
+}
+function onHash(){const id=decodeURIComponent(location.hash.slice(1));if(!id)return;const el=document.getElementById(id);if(el){reveal(el);setTimeout(()=>el.scrollIntoView(),30);}}
+window.addEventListener('hashchange',onHash);
+/* scroll spy + progress */
+const links=$$('.si');
+const targets=links.map(a=>({a,el:document.getElementById(a.getAttribute('href').slice(1))})).filter(x=>x.el);
+const prog=document.querySelector('.progress i'), cur=document.querySelector('[data-cur]');
+let raf=0;
+function spy(){
+  raf=0;
+  let act=targets[0];
+  targets.forEach(t=>{if(t.el.getBoundingClientRect().top<=140) act=t;});
+  links.forEach(a=>a.classList.toggle('on',act&&a===act.a));
+  if(act&&cur) cur.textContent=act.a.textContent.replace(/^\s*\d*\s*/,'').trim()||'Contents';
+  const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;
+  if(prog) prog.style.width=(max>0?Math.min(100,window.scrollY/max*100):0)+'%';
+  if(act){const nav=document.querySelector('.side-nav');const r=act.a.getBoundingClientRect(),nr=nav.getBoundingClientRect();if(r.top<nr.top+20||r.bottom>nr.bottom-20)nav.scrollTop+=r.top-nr.top-nr.height/3;}
+}
+window.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(spy);},{passive:true});
+window.addEventListener('resize',spy);
+spy(); if(location.hash) onHash();
+})();
+
+(function(){
+const BASE = 14*3600 + 10*60;
+const GRACE = 300;
+function mk(){
+  return [
+    {id:'#BF-2381', items:['2× Cơm tấm sườn','1× Trà đá'], note:'Ít hành', avail:-388, target:900, ext:0, ready:null, arrive:240, rem5:false, remMiss:false},
+    {id:'#BF-2379', items:['1× Bún bò Huế','1× Nem rán (3 cái)'], note:'', avail:-1030, target:900, ext:0, ready:null, arrive:-200, rem5:true, remMiss:true},
+    {id:'#BF-2384', items:['1× Phở bò tái','1× Quẩy (2 cái)'], note:'Ít hành, nhiều giá', avail:-40, target:900, ext:0, ready:null, arrive:540, rem5:false, remMiss:false}
+  ];
+}
+const S = {screen:'list', tab:'prep', oid:null, group:'A', t:0, eta:true, fail:false, err:null, rate:92, elig:48, setVal:15, sheet:false, pick:5, ann:false, toast:'', orders:mk()};
+let tt = null;
+const $ = (id)=>document.getElementById(id);
+const pad = (n)=>String(n).padStart(2,'0');
+const mmss = (s)=>pad(Math.floor(s/60))+':'+pad(s%60);
+function hhmm(t){const tot=BASE+t;return pad(Math.floor(tot/3600)%24)+':'+pad(Math.floor((tot%3600)/60));}
+const dl = (o)=>o.avail+o.target+o.ext;
+const rem = (o)=>dl(o)-S.t;
+const ord = (id)=>S.orders.find(o=>o.id===id);
+function readyLabel(o){
+  const late = o.ready-(o.avail+o.target+o.ext);
+  if(late<=0) return {t:'On time',c:'ok'};
+  if(late<=GRACE) return {t:'On time (5-min grace)',c:'ok'};
+  return {t:'Late by '+Math.ceil(late/60)+' min',c:'late'};
+}
+function drv(o){
+  const arrived = S.t>=o.arrive;
+  if(o.ready!==null){
+    return arrived ? {tag:'Driver arrived',t:'Driver is at the store',s:'Hand over the order now',w:false}
+                   : {tag:'Driver on the way',t:'Order marked ready',s:'Driver sees readiness in the Driver App',w:false};
+  }
+  if(arrived){
+    const w = S.t-o.arrive;
+    return w<30 ? {tag:'Driver arrived',t:'Driver arrived',s:'Arrived '+hhmm(o.arrive),w:false}
+                : {tag:'Driver waiting',t:'Driver waiting '+mmss(w),s:'Arrived '+hhmm(o.arrive)+' · order not ready yet',w:true};
+  }
+  if(!S.eta) return {tag:'Driver on the way',t:'Driver ETA unavailable',s:'Preparation countdown continues as normal',w:false};
+  const m = Math.max(1,Math.ceil((o.arrive-S.t)/60));
+  return {tag:'Driver on the way',t:'Driver arrives in '+m+' min',s:'Updated '+(S.t%30)+'s ago · for information only',w:false};
+}
+function toast(msg){
+  S.toast=msg; render(); clearTimeout(tt);
+  tt=setTimeout(()=>{S.toast='';render();},3600);
+}
+/* ---------- screens ---------- */
+function navHTML(){
+  const A=[['list','Orders'],['perf','Performance'],['settings','Settings']];
+  return '<nav class="p-nav">'+A.map(([k,l])=>`<button class="p-nb ${S.screen===k||(k==='list'&&S.screen==='detail')?'on':''}" data-act="go:${k}"><i></i>${l}</button>`).join('')+'</nav>';
+}
+function listScreen(){
+  const A=S.group==='A';
+  const prep=S.orders.filter(o=>o.ready===null), rdy=S.orders.filter(o=>o.ready!==null);
+  const show=S.tab==='prep'?prep:rdy;
+  let h=`<div class="p-hdr"><div class="p-title">Orders</div><span class="p-open">● Open</span></div>
+  <div class="p-tabs"><button class="p-tab ${S.tab==='prep'?'on':''}" data-act="tab:prep">Preparing ${prep.length}</button><button class="p-tab ${S.tab==='ready'?'on':''}" data-act="tab:ready">Ready ${rdy.length}</button></div><div class="p-body">`;
+  if(!show.length) h+='<div class="p-empty">No orders here yet.</div>';
+  show.forEach(o=>{
+    const over = o.ready===null && rem(o)<0;
+    if(!A){
+      h+=`<button class="p-card" data-act="open:${o.id}"><div class="p-row"><b>${o.id}</b><span class="p-sp"></span><span class="p-chip">${o.ready===null?'Preparing':'Ready'}</span></div><div class="p-items">${o.items.join(', ')}</div><div class="p-sub">Received ${hhmm(o.avail)}</div></button>`;
+      return;
+    }
+    if(o.ready!==null){
+      const r=readyLabel(o);
+      h+=`<button class="p-card" data-act="open:${o.id}"><div class="p-row"><b>${o.id}</b> <span class="p-beta">BETA</span><span class="p-sp"></span><span class="p-chip ${r.c}">${r.t}</span></div><div class="p-items">${o.items.join(', ')}</div><div class="p-sub">Ready at ${hhmm(o.ready)}</div></button>`;
+      return;
+    }
+    h+=`<button class="p-card ${over?'over':''}" data-act="open:${o.id}"><div class="p-row"><b>${o.id}</b> <span class="p-beta">BETA</span><span class="p-sp"></span><span class="p-chip ${over?'over':''}" data-k="cdchip" data-o="${o.id}"></span></div>
+    <div class="p-items">${o.items.join(', ')}</div><div class="p-bar ${over?'over':''}"><i data-k="bar" data-o="${o.id}"></i></div><div class="p-drvline" data-k="drvline" data-o="${o.id}"></div></button>`;
+  });
+  return {hdr:'',body:h+'</div>',actions:''};
+}
+function detailScreen(){
+  const o=ord(S.oid), A=S.group==='A';
+  const done=o.ready!==null, over=!done&&rem(o)<0;
+  const back=`<button class="p-back" data-act="back" aria-label="Back">‹</button>`;
+  let h=`<div class="p-hdr" data-n="1" data-spec="Order header">${back}<div class="p-title">Order ${o.id}</div>${A?'<span class="p-beta">BETA</span>':''}</div><div class="p-body">`;
+  h+=`<div class="p-status-row"><b>${done?'Ready':'Preparing'}</b><span class="p-sub" style="margin:0">Received ${hhmm(o.avail)}</span></div>`;
+  if(A){
+    h+=`<div class="p-betabar" data-n="2" data-spec="Beta marker"><span class="p-beta">BETA</span><span>This preparation-time feature is being tested with selected Merchants.</span></div>`;
+    const d=drv(o);
+    h+=`<div class="p-strip ${d.w?'warn':''}" data-n="3" data-spec="Driver ETA context"><span class="tag" data-n="10" data-k="drvtag" data-o="${o.id}">${d.tag}</span><div class="t" data-k="drvt" data-o="${o.id}">${d.t}</div><div class="s" data-k="drvs" data-o="${o.id}">${d.s}</div></div>`;
+    h+=`<div class="p-prep ${done?'done':over?'over':''}" data-n="4" data-spec="Preparation target card"><div class="k"><span>TARGET PREPARATION TIME</span><span>${o.target/60}${o.ext?' + '+o.ext/60:''} min</span></div>`;
+    if(done){const r=readyLabel(o);h+=`<div class="big">Ready ${hhmm(o.ready)}</div><div class="p-sub">${r.t}</div>`;}
+    else h+=`<div class="big" data-k="cd" data-o="${o.id}"></div><div class="p-sub" data-k="cdsub" data-o="${o.id}"></div><div class="p-bar ${over?'over':''}" style="margin-bottom:0"><i data-k="bar" data-o="${o.id}"></i></div>`;
+    h+='</div>';
+    if(!done && over) h+=`<div class="p-banner red" data-n="6" data-spec="Reminder"><b>Target time passed</b>Mark the order ready, or request more time. Update the order if you need more time.</div>`;
+    else if(!done && o.rem5) h+=`<div class="p-banner amb" data-n="6" data-spec="Reminder"><b>5 minutes remaining</b>Update the order if you need more time.</div>`;
+    if(S.err) h+=`<div class="p-banner err" data-n="11" data-spec="Error state"><span>Update not sent. Check your connection and try again.</span><button class="p-btn sm" data-act="retry">Retry</button></div>`;
+    h+=`<div class="p-h" data-n="5" data-spec="Order contents" style="margin-top:6px">ORDER</div>`;
+  } else {
+    h+=`<div class="p-h">ORDER</div>`;
+  }
+  o.items.forEach(i=>h+=`<div class="p-li">${i}</div>`);
+  if(o.note) h+=`<div class="p-note">Customer note: ${o.note}</div>`;
+  if(A) h+=`<button class="p-mini" data-n="7" data-spec="Preparation performance" data-act="go:perf"><span>7-day on-time ${S.elig<20?'- not enough orders yet':S.rate+'%'}</span><span>›</span></button>`;
+  h+='</div>';
+  let act;
+  if(done) act=`<div class="p-actions"><button class="p-btn" disabled>${A?'Marked ready '+hhmm(o.ready):'Marked ready'}</button></div>`;
+  else if(A) act=`<div class="p-actions"><button class="p-btn" data-n="9" data-spec="Secondary action" data-act="more" ${o.ext?'disabled':''}>${o.ext?'Extension used':'Need more time'}</button><button class="p-btn pri" data-n="8" data-spec="Primary action" data-act="ready">Order ready</button></div>`;
+  else act=`<div class="p-actions"><button class="p-btn pri" data-act="ready">Order ready</button></div>`;
+  return {hdr:'',body:h,actions:act};
+}
+function perfScreen(){
+  if(S.group==='B') return {hdr:`<div class="p-hdr"><div class="p-title">Performance</div></div>`,body:'<div class="p-body"><div class="p-empty">Not available in the control group.<br>These Merchants keep the current flow.</div></div>',actions:''};
+  let h=`<div class="p-hdr"><div class="p-title">Preparation performance</div><span class="p-beta">BETA</span></div><div class="p-body"><div class="p-h" style="margin-top:2px">LAST 7 DAYS</div>`;
+  if(S.elig<20){
+    h+=`<div class="p-score"><div class="num">-</div><div class="p-sub">${S.elig} eligible orders · 20 needed to show your on-time rate</div></div>`;
+  } else {
+    h+=`<div class="p-score"><div class="num">${S.rate}%</div><div class="p-sub">on time · ${S.elig} eligible orders</div>
+    <div class="p-sub" style="margin-top:6px">On time = ready within the target plus a 5-minute grace period.</div></div>`;
+    if(S.rate<=85) h+=`<div class="p-banner amb"><b>Your on-time rate is ${S.rate}%</b>Update the order when you need more time, and mark it ready as soon as it is done. This is a soft warning, with no penalty.</div>`;
+    if(S.rate>=95) h+=`<div class="p-banner" style="background:var(--p-soft);border:1px solid var(--p-y)"><b>Reliable Preparation badge earned</b>95% on time with at least 20 eligible orders.</div>`;
+    else h+=`<div class="p-score" style="background:var(--p-soft);border-color:var(--p-y)"><b style="font-size:12.5px">Reliable Preparation badge</b><div class="p-sub">Reach 95% on time (minimum 20 eligible orders)</div><div class="p-bar" style="margin:8px 0 0"><i style="width:${Math.min(100,Math.round(S.rate/95*100))}%"></i></div></div>`;
+  }
+  h+=`<div class="p-h">RECENT ORDERS</div>`;
+  S.orders.filter(o=>o.ready!==null).forEach(o=>{const r=readyLabel(o);h+=`<div class="p-row p-li"><b>${o.id}</b><span class="p-sp"></span><span class="p-chip ${r.c}">${r.t}</span></div>`;});
+  if(!S.orders.some(o=>o.ready!==null)) h+='<div class="p-sub">Orders you mark ready appear here with On time or Late status.</div>';
+  return {hdr:'',body:h+'</div>',actions:''};
+}
+function setScreen(){
+  if(S.group==='B') return {hdr:`<div class="p-hdr"><div class="p-title">Settings</div></div>`,body:'<div class="p-body"><div class="p-empty">Preparation settings are not available in the control group.</div></div>',actions:''};
+  const bad=S.setVal<5||S.setVal>45;
+  let h=`<div class="p-hdr"><div class="p-title">Preparation settings</div></div><div class="p-body"><div class="p-h" style="margin-top:2px">DEFAULT PREPARATION TIME</div>
+  <div class="p-stepper"><button data-act="dec" aria-label="Decrease">-</button><div class="v">${S.setVal} min</div><button class="y" data-act="inc" aria-label="Increase">+</button></div>
+  <div class="p-sub" style="text-align:center;margin-top:6px;${bad?'color:var(--p-red);font-weight:700':''}">${bad?'Value must be between 5 and 45 min. The platform default is used until it is valid.':'Allowed range 5 - 45 min'}</div>
+  <div class="p-note" style="margin-top:12px">Used as the preparation target for new orders. You can request more time on an individual order.</div>
+  <div class="p-h">REMINDERS</div><div class="p-row p-li"><span>5 minutes before the target</span><span class="p-sp"></span><span class="p-chip ok">On</span></div><div class="p-row p-li"><span>When the target is missed</span><span class="p-sp"></span><span class="p-chip ok">On</span></div>
+  <div class="p-note">Changing the default affects new orders only. Active orders keep the target captured when they were sent.</div></div>`;
+  return {hdr:'',body:h,actions:`<div class="p-actions"><button class="p-btn pri" data-act="save" ${bad?'disabled':''}>Save</button></div>`};
+}
+function sheetHTML(){
+  const o=ord(S.oid); if(!o) return '';
+  const nd=dl(o)+S.pick*60;
+  const over=rem(o)<0;
+  return `<div class="p-ov" data-act="cancel"></div><div class="p-sheet"><h5>Need more time?</h5><div class="d">Pick one extension. The Driver App shows the new ready-by time.</div>
+  <div class="p-opts">${[5,10,15].map(m=>`<button class="p-opt ${S.pick===m?'on':''}" data-act="pick:${m}">+${m} min</button>`).join('')}</div>
+  <div class="p-note" style="margin:0 0 10px"><b>New ready-by ${hhmm(nd)}</b><br>One extension per order, up to 15 min.${over?' The target has passed, so lateness already recorded is not removed.':''}</div>
+  ${S.err==='ext'?'<div class="p-banner err" data-n="11" data-spec="Error state"><span>Update not sent. Check your connection and try again.</span></div>':''}
+  <button class="p-btn pri" style="width:100%" data-act="confirm">${S.err==='ext'?'Retry':'Confirm +'+S.pick+' min'}</button>
+  <button class="p-btn" style="width:100%;margin-top:8px;border-color:var(--p-line);color:var(--p-mute)" data-act="cancel">Cancel</button></div>`;
+}
+function render(){
+  const scr=$('pscreen'); if(!scr) return;
+  let v;
+  if(S.screen==='list') v=listScreen(); else if(S.screen==='detail') v=detailScreen(); else if(S.screen==='perf') v=perfScreen(); else v=setScreen();
+  const showNav = S.screen!=='detail';
+  scr.className='pscreen'+(S.ann?' ann':'');
+  scr.innerHTML=`<div class="p-status"><span>${hhmm(S.t)}</span><span>5G ▮▮▮</span></div><div class="p-main">${v.hdr}${v.body}${v.actions}${S.sheet?sheetHTML():''}${S.toast?`<div class="p-toast">${S.toast}</div>`:''}</div>${showNav?navHTML():''}`;
+  renderSide(); upd();
+}
+function upd(){
+  document.querySelectorAll('#pscreen [data-k]').forEach(el=>{
+    const o=ord(el.dataset.o); if(!o) return;
+    const r=rem(o), k=el.dataset.k;
+    if(k==='cd') el.textContent = r>=0?mmss(r):'+'+mmss(-r);
+    else if(k==='cdsub') el.textContent = r>=0?'remaining of '+((o.target+o.ext)/60)+' min':'overdue';
+    else if(k==='cdchip') el.textContent = r>=0?mmss(r)+' left':'+'+mmss(-r)+' overdue';
+    else if(k==='bar'){const p=Math.min(100,Math.max(0,(S.t-o.avail)/(o.target+o.ext)*100));el.style.width=p+'%';}
+    else if(k==='drvline'){const d=drv(o);el.textContent=d.t;el.className='p-drvline'+(d.w?' warn':'');}
+    else if(k==='drvt') el.textContent=drv(o).t;
+    else if(k==='drvs') el.textContent=drv(o).s;
+    else if(k==='drvtag') el.textContent=drv(o).tag;
+  });
+  const c=$('pj-clock'); if(c) c.textContent=hhmm(S.t)+':'+pad(S.t%60<0?0:S.t%60);
+}
+function tick(){
+  S.t++;
+  let cross=false;
+  S.orders.forEach(o=>{
+    if(o.ready!==null) return;
+    const r=rem(o);
+    if(!o.rem5 && r<=300){o.rem5=true;cross=true;if(S.group==='A'){S.toast='<b>'+o.id+'</b> · 5 minutes remaining';}}
+    if(!o.remMiss && r<0){o.remMiss=true;cross=true;if(S.group==='A'){S.toast='<b>'+o.id+'</b> · target time passed';}}
+  });
+  if(cross){render();clearTimeout(tt);tt=setTimeout(()=>{S.toast='';render();},3600);}
+  else {upd();}
+}
+function skip(sec){for(let i=0;i<sec;i++){tick();}}
+/* ---------- actions ---------- */
+function doReady(){
+  const o=ord(S.oid);
+  if(S.fail){S.fail=false;S.err='ready';render();return;}
+  S.err=null;o.ready=S.t;S.sheet=false;
+  toast(S.group==='A'?'<b>'+o.id+'</b> marked ready. Driver can see readiness.':'<b>'+o.id+'</b> marked ready.');
+}
+function doExt(){
+  const o=ord(S.oid);
+  if(S.fail){S.fail=false;S.err='ext';render();return;}
+  S.err=null;o.ext=S.pick*60;S.sheet=false;
+  toast('Target extended by <b>+'+S.pick+' min</b>. Driver App shows the new ready-by time.');
+}
+function act(a){
+  const [k,v]=a.split(':');
+  if(k==='go'){S.screen=v;S.sheet=false;S.err=null;render();}
+  else if(k==='tab'){S.tab=v;render();}
+  else if(k==='open'){S.oid=v;S.screen='detail';S.err=null;render();}
+  else if(k==='back'){S.screen='list';S.sheet=false;S.err=null;render();}
+  else if(k==='ready'||k==='retry'){ if(S.err==='ext') doExt(); else doReady(); }
+  else if(k==='more'){S.sheet=true;S.err=null;render();}
+  else if(k==='pick'){S.pick=+v;render();}
+  else if(k==='confirm'){doExt();}
+  else if(k==='cancel'){S.sheet=false;S.err=null;render();}
+  else if(k==='inc'){S.setVal=Math.min(99,S.setVal+1);render();}
+  else if(k==='dec'){S.setVal=Math.max(0,S.setVal-1);render();}
+  else if(k==='save'){toast('Saved: <b>'+S.setVal+' min</b>. Applies to new orders only.');}
+}
+/* ---------- side panel ---------- */
+const LEG=[['Order header','Order ID, received time, status'],['Beta marker','Explains the feature is in test'],['Driver ETA context','“Driver arrives in X min”, last updated. Informational only'],['Preparation target card','Target and countdown from the server start time'],['Order contents','Items, quantities, options, Customer notes'],['Reminder','At 5 minutes left and when the target is missed'],['Preparation performance','7-day on-time rate and badge'],['Primary action','Order ready'],['Secondary action','Need more time, then pick a duration and confirm'],['Driver status','On the way, arrived or waiting'],['Error state','“Update not sent”, with retry']];
+function renderSide(){
+  const s=$('pside'); if(!s) return;
+  const b=(label,act,on)=>`<button class="pj-b ${on?'on':''}" data-pact="${act}">${label}</button>`;
+  s.innerHTML=`<h4>Try the Merchant App</h4><p style="font-size:12.5px;margin:0 0 12px;color:var(--muted)">Tap inside the phone. Use the controls to change the situation and see how each screen reacts. This wireframe covers the Merchant App only.</p>
+  <div class="pj-grp"><div class="pj-lbl">Merchant group</div><div class="pj-btns">${b('Group A · new flow','grp:A',S.group==='A')}${b('Group B · current flow','grp:B',S.group==='B')}</div></div>
+  <div class="pj-grp"><div class="pj-lbl">Simulated time <span class="pj-clock" id="pj-clock"></span></div><div class="pj-btns">${b('+1 min','skip:60')}${b('+5 min','skip:300')}${b('Jump: 5 min left','jump5')}${b('Jump: overdue','jumpo')}${b('Reset','reset')}</div></div>
+  <div class="pj-grp"><div class="pj-lbl">Simulate</div><div class="pj-btns">${b('Driver ETA unavailable','eta',!S.eta)}${b(S.fail?'Network failure: armed':'Network failure on next update','fail',S.fail)}</div><p style="font-size:11.5px;color:var(--muted);margin:8px 0 0">ETA unavailable shows in the Driver strip of each order. Network failure makes the <b>next</b> Order ready or extension confirm fail once, then Retry succeeds.</p></div>
+  <div class="pj-grp"><div class="pj-lbl">Scorecard scenario</div><div class="pj-btns">${b('92% · 48 orders','sc:92:48',S.rate===92&&S.elig===48)}${b('82% · soft warning','sc:82:48',S.rate===82)}${b('96% · badge','sc:96:48',S.rate===96)}${b('12 orders','sc:92:12',S.elig===12)}</div></div>
+  <div class="pj-grp"><div class="pj-lbl">Spec annotations</div><div class="pj-btns">${b(S.ann?'Hide numbers':'Show numbers','ann',S.ann)}</div>
+  <ul class="pj-legend">${LEG.map((l,i)=>`<li><span class="n">${i+1}</span><span><b>${l[0]}.</b> ${l[1]}</span></li>`).join('')}</ul></div>`;
+}
+function pact(a){
+  const p=a.split(':');
+  if(p[0]==='grp'){S.group=p[1];S.screen='list';S.sheet=false;S.err=null;render();}
+  else if(p[0]==='skip'){skip(+p[1]);render();}
+  else if(p[0]==='jump5'){const o=S.orders[0];if(rem(o)>300) skip(rem(o)-300);else render();}
+  else if(p[0]==='jumpo'){const o=S.orders[0];if(rem(o)>=0) skip(rem(o)+130);else render();}
+  else if(p[0]==='reset'){const g=S.group,ann=S.ann,rate=S.rate,el=S.elig,eta=S.eta;Object.assign(S,{screen:'list',tab:'prep',oid:null,t:0,fail:false,err:null,sheet:false,pick:5,toast:'',setVal:15,orders:mk(),group:g,ann:ann,rate:rate,elig:el,eta:eta});render();}
+  else if(p[0]==='eta'){S.eta=!S.eta;render();}
+  else if(p[0]==='fail'){S.fail=!S.fail;if(S.fail){toast('<b>Network failure armed.</b> Open an order, then tap Order ready or confirm an extension.');}else{render();}}
+  else if(p[0]==='sc'){S.rate=+p[1];S.elig=+p[2];render();}
+  else if(p[0]==='ann'){S.ann=!S.ann;render();}
+}
+function init(){
+  const scr=$('pscreen'), side=$('pside'); if(!scr||!side) return;
+  scr.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b&&!b.disabled)act(b.dataset.act);});
+  side.addEventListener('click',e=>{const b=e.target.closest('[data-pact]');if(b)pact(b.dataset.pact);});
+  render();
+  setInterval(tick,1000);
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+
+(function(){
+const $=(id)=>document.getElementById(id);
+const pad=(n)=>String(n).padStart(2,'0');
+const mmss=(s)=>pad(Math.floor(s/60))+':'+pad(s%60);
+const AC=[
+ 'Countdown from the server timestamp',
+ 'Same remaining time after reopening',
+ 'ETA with last-updated time',
+ 'No start-time suggestion from ETA',
+ 'ETA unavailable keeps the countdown',
+ 'Driver or ETA change keeps the countdown',
+ 'Beta for Group A, Group B unchanged',
+ 'Target reached, no auto-ready'
+];
+const ST={
+ fresh:{label:'Fresh ETA',ac:[1,2,3,4,7]},
+ unavail:{label:'ETA unavailable',ac:[1,5]},
+ reached:{label:'Target reached',ac:[8]},
+ groupb:{label:'Group B',ac:[7]}
+};
+const S={st:'fresh',start:0,changed:false,bg:false,toast:''};
+let tm=null;
+function setStart(){
+  const el={fresh:388,unavail:388,reached:897,groupb:388}[S.st];
+  S.start=Date.now()-el*1000; S.changed=false;
+}
+function elapsed(){return Math.floor((Date.now()-S.start)/1000);}
+function screen(){
+  const A=S.st!=='groupb', el=elapsed(), rem=900-el, over=rem<=0;
+  let h=`<div class="p-status"><span>14:10</span><span>5G ▮▮▮</span></div><div class="p-main">`;
+  h+=`<div class="p-hdr"><button class="p-back" tabindex="-1">‹</button><div class="p-title">Order #BF-2381</div>${A?'<span class="p-beta">BETA</span>':''}</div><div class="p-body">`;
+  h+=`<div class="p-status-row" ${A?'data-n="2"':'data-n="7"'}><b>Preparing</b><span class="p-sub" style="margin:0">Received 14:03</span></div>`;
+  if(A){
+    h+=`<div class="p-betabar" data-n="7"><span class="p-beta">BETA</span><span>This preparation-time feature is being tested with selected Merchants.</span></div>`;
+    if(S.st==='unavail'){
+      h+=`<div class="p-strip" data-n="5"><div class="t">Driver ETA unavailable</div><div class="s">Preparation countdown continues as normal</div></div>`;
+    } else {
+      const m=S.changed?7:Math.max(1,Math.ceil((388+240-el)/60));
+      h+=`<div class="p-strip" data-n="3">${S.changed?'<span class="tag" data-n="6">Updated</span>':''}<div class="t">Driver arrives in ${m} min</div><div class="s">${S.changed?'Updated 0s ago · Driver changed':'Updated '+(el%30)+'s ago'} · <span data-n="4">for information only</span></div></div>`;
+    }
+    const cls=over?'over':'';
+    h+=`<div class="p-prep ${cls}" data-n="${S.st==='reached'?8:1}"><div class="k"><span>TARGET PREPARATION TIME</span><span>15 min</span></div>
+      <div class="big">${over?(rem===0?'00:00':'+'+mmss(-rem)):mmss(rem)}</div><div class="p-sub">${over?'target reached · overdue':'remaining of 15 min'}</div>
+      <div class="p-bar ${cls}" style="margin-bottom:0"><i style="width:${Math.min(100,el/9)}%"></i></div></div>`;
+    if(S.st==='reached') h+=`<div class="p-note">The order is not marked ready automatically. The Merchant decides.</div>`;
+  }
+  h+=`<div class="p-h">ORDER</div><div class="p-li">2× Cơm tấm sườn</div><div class="p-li">1× Trà đá</div><div class="p-note">Customer note: Ít hành</div></div>`;
+  if(A) h+=`<div class="p-actions" style="flex-direction:column;gap:5px"><div style="display:flex;gap:8px"><button class="p-btn" disabled style="border-style:dashed">Need more time</button><button class="p-btn" disabled style="border-style:dashed">Order ready</button></div><div class="p-sub" style="text-align:center;margin:0">Out of scope: separate follow-up tickets</div></div>`;
+  else h+=`<div class="p-actions"><button class="p-btn pri" tabindex="-1">Order ready</button></div>`;
+  if(S.bg) h+=`<div class="p-ov" style="display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;text-align:center;padding:30px">App in background…<br>time keeps running on the server</div>`;
+  if(S.toast) h+=`<div class="p-toast">${S.toast}</div>`;
+  h+=`</div>`;
+  return h;
+}
+function side(){
+  const act=ST[S.st].ac;
+  $('tkac').innerHTML=AC.map((t,i)=>`<li class="${act.includes(i+1)?'on':''}"><span class="n">${i+1}</span><span>${t}</span></li>`).join('');
+  $('tkstates').innerHTML=Object.keys(ST).map(k=>`<button class="pj-b ${k===S.st?'on':''}" data-st="${k}">${ST[k].label}</button>`).join('');
+}
+function render(){const s=$('tkscreen');if(!s)return;s.innerHTML=screen();side();}
+function toast(m){S.toast=m;render();setTimeout(()=>{S.toast='';render();},3200);}
+function init(){
+  const s=$('tkscreen'); if(!s) return;
+  setStart(); render();
+  $('tkw').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    if(b.dataset.st){S.st=b.dataset.st;setStart();S.toast='';render();}
+    else if(b.dataset.tk==='reopen'){S.bg=true;render();setTimeout(()=>{S.bg=false;toast('Back in the app. Remaining time is derived from the server timestamp.');},2500);}
+    else if(b.dataset.tk==='driver'){if(S.st==='groupb'||S.st==='reached')return;S.st='fresh';S.changed=true;toast('ETA refreshed. The countdown was not reset.');}
+  });
+  tm=setInterval(()=>{if(!S.bg){const sc=$('tkscreen');if(sc&&sc.isConnected){sc.innerHTML=screen();}}},1000);
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+
+</script>
+</body>
+</html>
